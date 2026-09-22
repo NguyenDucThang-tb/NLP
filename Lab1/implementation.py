@@ -1,8 +1,3 @@
-"""mấy hàm tf-idf cơ bản cho bài lab.
-
-ở đây em không dùng tfidfvectorizer có sẵn.
-em tự làm từng bước để dễ nhìn hơn.
-"""
 
 from __future__ import annotations
 
