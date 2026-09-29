@@ -1,0 +1,4 @@
+Model,Train_PPL,Validation_PPL,Test_PPL
+Unigram,2139.92197910549,inf,inf
+Bigram,186.26172274872752,inf,inf
+Trigram,15.649359092181625,inf,inf
