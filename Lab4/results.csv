@@ -1,0 +1,7 @@
+Model,Representation,Classifier,Training Time (s),Vocabulary Size,Accuracy,Precision,Recall,F1,Split,Word2Vec Training Time (s),Classifier Training Time (s),Total Training Time (s),Experiment,Features,Unigram Features,Bigram Features
+Experiment 5 — TF-IDF Unigram + Logistic Regression,,,0.9794339770014632,10000.0,,,,0.887787470261697,Validation,,,,18. N-gram Features,Unigram,10000.0,0.0
+Experiment 5 — TF-IDF Unigram + Bigram + Logistic Regression,,,0.2582409899987397,10000.0,,,,0.8940384234501881,Validation,,,,18. N-gram Features,Unigram + Bigram,4388.0,5612.0
+TF-IDF + Logistic Regression,TF-IDF,Logistic Regression,0.9794339770014632,10000.0,0.8868,0.8801100628930818,0.8956,0.887787470261697,Validation,,,,,,,
+Average Word2Vec + Logistic Regression,Average Word2Vec,Logistic Regression,251.66716432499925,50914.0,0.8695,0.8672232160604254,0.8726,0.8699032997707108,Validation,,,,,,,
+TF-IDF + Linear SVM,TF-IDF,Linear SVM,2.404733920000581,10000.0,0.8856,0.8805763916304777,0.8922,0.8863500894098947,Validation,,,,,,,
+TF-IDF + Logistic Regression,,,,,0.8885,0.8778447772806847,0.9026,0.8900502908983335,Test,,,,,,,
