@@ -1,0 +1,4 @@
+Model,Best validation-loss epoch,Minimum validation loss,Final train loss,Final validation loss,Train loss decreased overall,Possible overfitting pattern (needs review)
+RNN,3,0.683847442817688,0.6570722491264344,0.683847442817688,True,False
+LSTM,2,0.6627262729644775,0.6721963899612426,0.6879276239395141,True,True
+GRU,3,0.49232821760177614,0.5014565308570862,0.49232821760177614,True,False

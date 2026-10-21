@@ -1,0 +1,9 @@
+Review type,Model,Variant,Prediction,P(positive),Delta vs original,Original tokens,Retained tokens,Truncated tokens
+Contrast,LSTM,Original,Positive,0.5203542113304138,0.0,22,22,0
+Contrast,LSTM,"Without ""terrible""",Positive,0.5269507169723511,0.006596505641937256,21,21,0
+Contrast,LSTM,"Without ""but""",Positive,0.5006585121154785,-0.019695699214935303,21,21,0
+Contrast,LSTM,"Without ""surprisingly good""",Positive,0.5017192363739014,-0.01863497495651245,20,20,0
+Contrast,GRU,Original,Negative,0.3778204023838043,0.0,22,22,0
+Contrast,GRU,"Without ""terrible""",Positive,0.6189361810684204,0.2411157786846161,21,21,0
+Contrast,GRU,"Without ""but""",Negative,0.39347919821739197,0.015658795833587646,21,21,0
+Contrast,GRU,"Without ""surprisingly good""",Negative,0.40886300802230835,0.03104260563850403,20,20,0

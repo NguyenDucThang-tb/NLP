@@ -1,0 +1,12 @@
+Token,Index,In model input
+beautiful,21,True
+believable,28,True
+impressive,56,True
+good,64,True
+not,80,True
+excellent,123,False
+moving,129,False
+enjoyed,134,False
+uneven,143,False
+slow,146,False
+recommend,148,False

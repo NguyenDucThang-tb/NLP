@@ -1,0 +1,5 @@
+Review type,Model,Variant,Prediction,P(positive),Delta vs original,Original tokens,Retained tokens,Truncated tokens
+Negation,LSTM,Original,Negative,0.35382527112960815,0.0,17,17,0
+Negation,LSTM,"Without all ""not"" tokens",Negative,0.3982495665550232,0.04442429542541504,14,14,0
+Negation,GRU,Original,Negative,0.2988201081752777,0.0,17,17,0
+Negation,GRU,"Without all ""not"" tokens",Positive,0.5092252492904663,0.2104051411151886,14,14,0

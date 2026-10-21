@@ -1,0 +1,3 @@
+Model,Prediction,P(positive),Original tokens,Retained tokens,Truncated tokens,UNK in retained input
+LSTM,Negative,0.4900459051132202,151,100,51,0
+GRU,Positive,0.6625059843063354,151,100,51,0

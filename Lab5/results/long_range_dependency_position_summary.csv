@@ -1,0 +1,19 @@
+,Model,Keyword,Position,P(positive),Correct rate,Predicted labels
+0,GRU,excellent,beginning,0.77595055103302,1.0,Positive
+2,GRU,excellent,middle,0.812801718711853,1.0,Positive
+1,GRU,excellent,end,0.8289143443107605,1.0,Positive
+3,GRU,terrible,beginning,0.44141116738319397,1.0,Negative
+5,GRU,terrible,middle,0.6285383105278015,0.0,Positive
+4,GRU,terrible,end,0.5420905351638794,0.0,Positive
+6,LSTM,excellent,beginning,0.6812708973884583,1.0,Positive
+8,LSTM,excellent,middle,0.6936075091362,1.0,Positive
+7,LSTM,excellent,end,0.6934237480163574,1.0,Positive
+9,LSTM,terrible,beginning,0.6430414319038391,0.0,Positive
+11,LSTM,terrible,middle,0.6734665632247925,0.0,Positive
+10,LSTM,terrible,end,0.6661916971206665,0.0,Positive
+12,RNN,excellent,beginning,0.60170578956604,1.0,Positive
+14,RNN,excellent,middle,0.6035698652267456,1.0,Positive
+13,RNN,excellent,end,0.5263093709945679,1.0,Positive
+15,RNN,terrible,beginning,0.6015800833702087,0.0,Positive
+17,RNN,terrible,middle,0.6010836362838745,0.0,Positive
+16,RNN,terrible,end,0.5160218477249146,0.0,Positive

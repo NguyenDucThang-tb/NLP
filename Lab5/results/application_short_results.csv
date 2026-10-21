@@ -1,0 +1,5 @@
+Review type,Model,Variant,Prediction,P(positive),Delta vs original,Original tokens,Retained tokens,Truncated tokens
+Short,LSTM,Original,Negative,0.4720088839530945,0.0,13,13,0
+Short,LSTM,"Without ""enjoyed""",Negative,0.4766329228878021,0.004624038934707642,12,12,0
+Short,GRU,Original,Positive,0.5866572856903076,0.0,13,13,0
+Short,GRU,"Without ""enjoyed""",Positive,0.5417042374610901,-0.04495304822921753,12,12,0

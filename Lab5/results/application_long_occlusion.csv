@@ -1,0 +1,5 @@
+Review type,Model,Variant,Prediction,P(positive),Delta vs original,Original tokens,Retained tokens,Truncated tokens
+Long,LSTM,Original,Negative,0.4900459051132202,0.0,100,100,0
+Long,LSTM,"Without ""surprisingly good""",Negative,0.4899143874645233,-0.00013151764869689941,98,98,0
+Long,GRU,Original,Positive,0.6625059843063354,0.0,100,100,0
+Long,GRU,"Without ""surprisingly good""",Positive,0.6593813896179199,-0.0031245946884155273,98,98,0

@@ -1,0 +1,19 @@
+Model,Sentence ID,Keyword,Expected,Position,Token index,Relative position,Total sequence length,Model max_length,Predicted,P(positive),Correct,Sequence truncated,Truncated
+RNN,excellent_beginning,excellent,Positive,beginning,0,0.0,24,100,Positive,0.60170578956604,True,False,False
+RNN,excellent_middle,excellent,Positive,middle,11,0.4782608695652174,23,100,Positive,0.6035698652267456,True,False,False
+RNN,excellent_end,excellent,Positive,end,27,0.9642857142857143,28,100,Positive,0.5263093709945679,True,False,False
+RNN,terrible_beginning,terrible,Negative,beginning,0,0.0,24,100,Positive,0.6015800833702087,False,False,False
+RNN,terrible_middle,terrible,Negative,middle,11,0.4782608695652174,23,100,Positive,0.6010836362838745,False,False,False
+RNN,terrible_end,terrible,Negative,end,27,0.9642857142857143,28,100,Positive,0.5160218477249146,False,False,False
+LSTM,excellent_beginning,excellent,Positive,beginning,0,0.0,24,100,Positive,0.6812708973884583,True,False,False
+LSTM,excellent_middle,excellent,Positive,middle,11,0.4782608695652174,23,100,Positive,0.6936075091362,True,False,False
+LSTM,excellent_end,excellent,Positive,end,27,0.9642857142857143,28,100,Positive,0.6934237480163574,True,False,False
+LSTM,terrible_beginning,terrible,Negative,beginning,0,0.0,24,100,Positive,0.6430414319038391,False,False,False
+LSTM,terrible_middle,terrible,Negative,middle,11,0.4782608695652174,23,100,Positive,0.6734665632247925,False,False,False
+LSTM,terrible_end,terrible,Negative,end,27,0.9642857142857143,28,100,Positive,0.6661916971206665,False,False,False
+GRU,excellent_beginning,excellent,Positive,beginning,0,0.0,24,100,Positive,0.77595055103302,True,False,False
+GRU,excellent_middle,excellent,Positive,middle,11,0.4782608695652174,23,100,Positive,0.812801718711853,True,False,False
+GRU,excellent_end,excellent,Positive,end,27,0.9642857142857143,28,100,Positive,0.8289143443107605,True,False,False
+GRU,terrible_beginning,terrible,Negative,beginning,0,0.0,24,100,Negative,0.44141116738319397,True,False,False
+GRU,terrible_middle,terrible,Negative,middle,11,0.4782608695652174,23,100,Positive,0.6285383105278015,False,False,False
+GRU,terrible_end,terrible,Negative,end,27,0.9642857142857143,28,100,Positive,0.5420905351638794,False,False,False
