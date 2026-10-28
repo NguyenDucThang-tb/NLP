@@ -1,0 +1,116 @@
+experiment,item,metric,value,details
+Experiment 1,The,Score,-0.355359392171,
+Experiment 1,The,Attention,0.120557119521,
+Experiment 1,movie,Score,-2.745105791755,
+Experiment 1,movie,Attention,0.011049412531,
+Experiment 1,was,Score,-0.688574124865,
+Experiment 1,was,Attention,0.08639319653,
+Experiment 1,surprisingly,Score,0.181073514198,
+Experiment 1,surprisingly,Attention,0.206140209913,
+Experiment 1,good,Score,-0.562397144732,
+Experiment 1,good,Attention,0.098011606858,
+Experiment 1,despite,Score,-1.175230175601,
+Experiment 1,despite,Attention,0.053104033091,
+Experiment 1,a,Score,-0.779188174093,
+Experiment 1,a,Attention,0.078908967634,
+Experiment 1,very,Score,-0.544284441431,
+Experiment 1,very,Attention,0.099803036857,
+Experiment 1,slow,Score,-0.944875731303,
+Experiment 1,slow,Attention,0.066860430675,
+Experiment 1,beginning,Score,0.040863108666,
+Experiment 1,beginning,Attention,0.179171986391,
+Experiment 2,The,Score A,-0.355359392171,
+Experiment 2,The,Weight A,0.120557119521,
+Experiment 2,The,Score B,1.911961637353,
+Experiment 2,The,Weight B,0.232770985101,
+Experiment 2,The,Delta,0.11221386558,
+Experiment 2,movie,Score A,-2.745105791755,
+Experiment 2,movie,Weight A,0.011049412531,
+Experiment 2,movie,Score B,-0.088991434492,
+Experiment 2,movie,Weight B,0.03147211771,
+Experiment 2,movie,Delta,0.020422705179,
+Experiment 2,was,Score A,-0.688574124865,
+Experiment 2,was,Weight A,0.08639319653,
+Experiment 2,was,Score B,1.639812597271,
+Experiment 2,was,Weight B,0.177311138421,
+Experiment 2,was,Delta,0.090917941891,
+Experiment 2,surprisingly,Score A,0.181073514198,
+Experiment 2,surprisingly,Weight A,0.206140209913,
+Experiment 2,surprisingly,Score B,-1.172650720851,
+Experiment 2,surprisingly,Weight B,0.010648752141,
+Experiment 2,surprisingly,Delta,-0.195491457772,
+Experiment 2,good,Score A,-0.562397144732,
+Experiment 2,good,Weight A,0.098011606858,
+Experiment 2,good,Score B,0.960928236103,
+Experiment 2,good,Weight B,0.089929108121,
+Experiment 2,good,Delta,-0.008082498737,
+Experiment 2,despite,Score A,-1.175230175601,
+Experiment 2,despite,Weight A,0.053104033091,
+Experiment 2,despite,Score B,0.750990368584,
+Experiment 2,despite,Weight B,0.072899647592,
+Experiment 2,despite,Delta,0.019795614501,
+Experiment 2,a,Score A,-0.779188174093,
+Experiment 2,a,Weight A,0.078908967634,
+Experiment 2,a,Score B,0.700583476844,
+Experiment 2,a,Weight B,0.069316079946,
+Experiment 2,a,Delta,-0.009592887688,
+Experiment 2,very,Score A,-0.544284441431,
+Experiment 2,very,Weight A,0.099803036857,
+Experiment 2,very,Score B,0.552181435446,
+Experiment 2,very,Weight B,0.059756314769,
+Experiment 2,very,Delta,-0.040046722088,
+Experiment 2,slow,Score A,-0.944875731303,
+Experiment 2,slow,Weight A,0.066860430675,
+Experiment 2,slow,Score B,1.715787685865,
+Experiment 2,slow,Weight B,0.191307316544,
+Experiment 2,slow,Delta,0.124446885869,
+Experiment 2,beginning,Score A,0.040863108666,
+Experiment 2,beginning,Weight A,0.179171986391,
+Experiment 2,beginning,Score B,0.629943554047,
+Experiment 2,beginning,Weight B,0.064588539655,
+Experiment 2,beginning,Delta,-0.114583446736,
+Experiment 3,cat -> I,Attention weight,0.462629763939,source_position=1; rank=1
+Experiment 3,cat -> sleeping,Attention weight,0.14132317316,source_position=1; rank=2
+Experiment 3,cat -> adopted,Attention weight,0.089285049192,source_position=1; rank=3
+Experiment 3,adopted -> sleeping,Attention weight,0.236039528927,source_position=4; rank=1
+Experiment 3,adopted -> adopted,Attention weight,0.208250174459,source_position=4; rank=2
+Experiment 3,adopted -> yesterday,Attention weight,0.139008631224,source_position=4; rank=3
+Experiment 3,sleeping -> sleeping,Attention weight,0.641718443764,source_position=7; rank=1
+Experiment 3,sleeping -> adopted,Attention weight,0.106144977388,source_position=7; rank=2
+Experiment 3,sleeping -> yesterday,Attention weight,0.094041832145,source_position=7; rank=3
+Experiment 4,LSTM,Accuracy,0.7152,
+Experiment 4,LSTM,Precision,0.6745166731542753,
+Experiment 4,LSTM,Recall,0.83176,
+Experiment 4,LSTM,F1,0.7449308590671347,
+Experiment 4,LSTM,Macro-F1,0.7112773465850932,
+Experiment 4,LSTM,Training Time (s),57.75173380599972,
+Experiment 4,LSTM,Parameters,1029761.0,
+Experiment 4,LSTM,Epochs Trained,3.0,
+Experiment 4,LSTM,Best Epoch (Validation F1),3.0,
+Experiment 4,Attention,Accuracy,0.78988,
+Experiment 4,Attention,Precision,0.7815681094102106,
+Experiment 4,Attention,Recall,0.80464,
+Experiment 4,Attention,F1,0.7929362607907289,
+Experiment 4,Attention,Macro-F1,0.7898342137862133,
+Experiment 4,Attention,Training Time (s),7.831956375000118,
+Experiment 4,Attention,Parameters,1007551.0,
+Experiment 4,Attention,Epochs Trained,3.0,
+Experiment 4,Attention,Best Epoch (Validation F1),3.0,
+Application 26,Sentence 1,P(Positive),0.126321405172348,expected=Positive; predicted=Negative; correct=False
+Application 26,Sentence 1,P(Negative),0.873678594827652,expected=Positive; predicted=Negative; correct=False
+Application 26,Sentence 2,P(Positive),0.0060599884018301,expected=Negative; predicted=Negative; correct=True
+Application 26,Sentence 2,P(Negative),0.9939400115981698,expected=Negative; predicted=Negative; correct=True
+Application 26,Sentence 3,P(Positive),0.9903019070625304,expected=Positive; predicted=Positive; correct=True
+Application 26,Sentence 3,P(Negative),0.0096980929374694,expected=Positive; predicted=Positive; correct=True
+Error Analysis,IMDb test row 0,P(Positive),0.2764375805854797,true=Negative; predicted=Negative; correct=True; truncated=140
+Error Analysis,IMDb test row 0,P(Negative),0.7235624194145203,true=Negative; predicted=Negative; correct=True; truncated=140
+Error Analysis,IMDb test row 2,P(Positive),0.2109136581420898,true=Negative; predicted=Negative; correct=True; truncated=34
+Error Analysis,IMDb test row 2,P(Negative),0.7890863418579102,true=Negative; predicted=Negative; correct=True; truncated=34
+Error Analysis,IMDb test row 3,P(Positive),0.3885457217693329,true=Negative; predicted=Negative; correct=True; truncated=255
+Error Analysis,IMDb test row 3,P(Negative),0.6114542782306671,true=Negative; predicted=Negative; correct=True; truncated=255
+Error Analysis,IMDb test row 1,P(Positive),0.6025820970535278,true=Negative; predicted=Positive; correct=False; truncated=113
+Error Analysis,IMDb test row 1,P(Negative),0.3974179029464721,true=Negative; predicted=Positive; correct=False; truncated=113
+Error Analysis,IMDb test row 4,P(Positive),0.794409990310669,true=Negative; predicted=Positive; correct=False; truncated=34
+Error Analysis,IMDb test row 4,P(Negative),0.205590009689331,true=Negative; predicted=Positive; correct=False; truncated=34
+Error Analysis,IMDb test row 6,P(Positive),0.8888713717460632,true=Negative; predicted=Positive; correct=False; truncated=192
+Error Analysis,IMDb test row 6,P(Negative),0.1111286282539367,true=Negative; predicted=Positive; correct=False; truncated=192

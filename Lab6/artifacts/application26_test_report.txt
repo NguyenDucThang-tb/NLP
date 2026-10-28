@@ -1,0 +1,16 @@
+PASS: checkpoint loads strictly and vocabulary mapping is complete
+PASS: preprocessing and labels match Experiment 4 configuration
+PASS: the exact three required sentences were used
+PASS: inference returned logits, probabilities and attention for all sentences
+PASS: probabilities are valid and prediction matches the larger class probability
+PASS: attention matrix shapes match the padded sequence length
+PASS: PAD keys and padded query rows are masked
+PASS: valid attention rows sum to one
+PASS: logits, probabilities and attention weights are finite
+PASS: correct/incorrect flags are computed from expected labels
+PASS: at least one actual correct and one actual incorrect example are selected
+PASS: heatmaps use the forward-pass attention matrices
+PASS: same checkpoint and input reproduce inference outputs
+PASS: Experiment 1-4 files and checkpoints remain byte-identical
+PASS: all CSV/NPZ/PNG artifacts exist and are non-empty
+PASS: output tables have expected rows and required columns

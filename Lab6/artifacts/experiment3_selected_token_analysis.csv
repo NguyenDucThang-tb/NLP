@@ -1,0 +1,10 @@
+Source Token,Source Position,Attended Token,Weight,Rank
+cat,1,I,0.462629763939,1
+cat,1,sleeping,0.141323173160,2
+cat,1,adopted,0.089285049192,3
+adopted,4,sleeping,0.236039528927,1
+adopted,4,adopted,0.208250174459,2
+adopted,4,yesterday,0.139008631224,3
+sleeping,7,sleeping,0.641718443764,1
+sleeping,7,adopted,0.106144977388,2
+sleeping,7,yesterday,0.094041832145,3

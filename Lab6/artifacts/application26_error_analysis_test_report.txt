@@ -1,0 +1,9 @@
+PASS: trained E4 checkpoint and saved vocabulary load strictly
+PASS: held-out samples are actual IMDb test rows
+PASS: exactly three correct and three incorrect are selected
+PASS: selection is first matching rows in original test order
+PASS: probabilities and labels agree with binary predictions
+PASS: token IDs and attention matrices use only retained tokens
+PASS: attention rows are normalized and finite
+PASS: all six attention figures and report artifacts exist
+PASS: E1-E4 outputs and checkpoints remain byte-identical

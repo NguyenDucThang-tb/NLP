@@ -1,0 +1,20 @@
+PASS: same dataset splits and no sample identity overlap
+PASS: same tokenizer, train-only vocabulary, max length and labels
+PASS: model input/output shapes
+PASS: model input/output shapes
+PASS: LSTM final state excludes trailing PAD
+PASS: padded keys receive zero weight and padded queries are excluded
+PASS: attention weights normalize over valid keys
+PASS: LSTM gradient flow is finite
+PASS: Attention gradient flow is finite
+PASS: finite logits/loss/attention values
+PASS: predictions are in label space
+PASS: LSTM metrics use the actual test labels
+PASS: LSTM parameter count is from the model
+PASS: LSTM training time is measured and positive
+PASS: Attention metrics use the actual test labels
+PASS: Attention parameter count is from the model
+PASS: Attention training time is measured and positive
+PASS: all result files exist and are non-empty
+PASS: fixed seed produces identical model initialization
+PASS: Experiment 1-3 artifacts remain byte-identical

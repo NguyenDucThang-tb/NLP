@@ -1,0 +1,2 @@
+Test row index,Ground truth,Attention prediction,Attention P(positive),Attention context shape,Token count shown,Text,Tokens,LSTM prediction,LSTM P(positive),LSTM final hidden shape
+41,0,0,0.16947902739048004,"(1, 50)",23,Widow hires a psychopath as a handyman. Sloppy film noir thriller which doesn't make much of its tension promising set-up. (3/10),widow hires a psychopath as a handyman sloppy film noir thriller which doesn't make much of its tension promising set up 3 10,0,0.18032050132751465,"(1, 64)"
