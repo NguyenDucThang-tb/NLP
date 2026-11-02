@@ -461,7 +461,8 @@ class ExperimentRunner:
                 "Classifier parameters": self._parameter_count(model),
                 "TransformerBlock parameters": self._block_parameter_count(model),
                 "Training time (s)": seconds, "Validation accuracy": metrics["accuracy"],
-                "Validation F1": metrics["f1"], "Best validation loss": metrics["loss"],
+                "Validation F1": metrics["f1"],
+                "Validation loss at best-F1 checkpoint": metrics["loss"],
             }
             rows.append(row)
             self._add_result(
@@ -542,7 +543,8 @@ class ExperimentRunner:
         row = {
             "Model": "LSTM", "Parameters": self._parameter_count(model),
             "Training time (s)": seconds, "Validation accuracy": metrics["accuracy"],
-            "Validation F1": metrics["f1"], "Best validation loss": metrics["loss"],
+            "Validation F1": metrics["f1"],
+            "Validation loss at best-F1 checkpoint": metrics["loss"],
         }
         self._add_result(
             experiment="Bài 21 — LSTM vs Transformer", model="LSTM",
@@ -557,7 +559,7 @@ class ExperimentRunner:
             "Parameters": self._parameter_count(transformer),
             "Training time (s)": self.times["heads_4"],
             "Validation accuracy": tmetrics["accuracy"], "Validation F1": tmetrics["f1"],
-            "Best validation loss": tmetrics["loss"],
+            "Validation loss at best-F1 checkpoint": tmetrics["loss"],
         }
         self._add_result(
             experiment="Bài 21 — LSTM vs Transformer", model="Transformer (4 heads, mean)",
