@@ -1,0 +1,58 @@
+test_confidence_empty_groups_and_error_shortages (test_lab08.LabTests.test_confidence_empty_groups_and_error_shortages) ... ok
+test_config_rejects_partial_full (test_lab08.LabTests.test_config_rejects_partial_full) ... ok
+test_forward_probabilities_and_contextual_representation (test_lab08.LabTests.test_forward_probabilities_and_contextual_representation) ... Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so
+W1106 01:16:42.737000 9 torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1106 01:16:42.756000 9 torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+ok
+test_frozen_and_full_start_from_same_real_checkpoint_and_head (test_lab08.LabTests.test_frozen_and_full_start_from_same_real_checkpoint_and_head) ... Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 2338.35it/s]
+[transformers] [1mDistilBertForSequenceClassification LOAD REPORT[0m from: distilbert/distilbert-base-uncased
+Key                     | Status     | 
+------------------------+------------+-
+vocab_transform.bias    | UNEXPECTED | 
+vocab_layer_norm.weight | UNEXPECTED | 
+vocab_projector.bias    | UNEXPECTED | 
+vocab_layer_norm.bias   | UNEXPECTED | 
+vocab_transform.weight  | UNEXPECTED | 
+pre_classifier.bias     | MISSING    | 
+pre_classifier.weight   | MISSING    | 
+classifier.weight       | MISSING    | 
+classifier.bias         | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 2175.88it/s]
+[transformers] [1mDistilBertForSequenceClassification LOAD REPORT[0m from: distilbert/distilbert-base-uncased
+Key                     | Status     | 
+------------------------+------------+-
+vocab_transform.bias    | UNEXPECTED | 
+vocab_layer_norm.weight | UNEXPECTED | 
+vocab_projector.bias    | UNEXPECTED | 
+vocab_layer_norm.bias   | UNEXPECTED | 
+vocab_transform.weight  | UNEXPECTED | 
+pre_classifier.bias     | MISSING    | 
+pre_classifier.weight   | MISSING    | 
+classifier.weight       | MISSING    | 
+classifier.bias         | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+ok
+test_frozen_encoder_unchanged_but_head_updates (test_lab08.LabTests.test_frozen_encoder_unchanged_but_head_updates) ... ok
+test_masked_padding_does_not_change_classification (test_lab08.LabTests.test_masked_padding_does_not_change_classification) ... ok
+test_metrics_and_missing_class (test_lab08.LabTests.test_metrics_and_missing_class) ... ok
+test_missing_or_invalid_labels_stop (test_lab08.LabTests.test_missing_or_invalid_labels_stop) ... ok
+test_nested_and_reproducible_subsets (test_lab08.LabTests.test_nested_and_reproducible_subsets) ... ok
+test_notebooks_valid_and_code_compiles (test_lab08.LabTests.test_notebooks_valid_and_code_compiles) ... ok
+test_real_tokenizer_shapes_padding_ids_mapping (test_lab08.LabTests.test_real_tokenizer_shapes_padding_ids_mapping) ... ok
+test_result_upsert_and_reject_invalid_metrics (test_lab08.LabTests.test_result_upsert_and_reject_invalid_metrics) ... ok
+test_scratch_never_calls_weight_loader (test_lab08.LabTests.test_scratch_never_calls_weight_loader) ... ok
+test_splits_disjoint_and_official_test_preserved (test_lab08.LabTests.test_splits_disjoint_and_official_test_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 1.550s
+
+OK
+sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute

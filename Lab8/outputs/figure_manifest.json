@@ -1,0 +1,33 @@
+{
+  "data_efficiency.png": {
+    "experiment_id": "16",
+    "run_mode": "quick",
+    "run_ids": [
+      "quick-pretrained-fine_tuning-f0.1-l128-f17f7aaf3f7b",
+      "quick-pretrained-fine_tuning-f0.25-l128-ebbd2f1d94a0",
+      "quick-pretrained-fine_tuning-f0.5-l128-06487fa8a5e4",
+      "quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e",
+      "quick-scratch-fine_tuning-f0.1-l128-38aef12c5a46",
+      "quick-scratch-fine_tuning-f0.25-l128-771c008a0c4a",
+      "quick-scratch-fine_tuning-f0.5-l128-f78f0859f74b",
+      "quick-scratch-fine_tuning-f1-l128-7ac1e0072268"
+    ],
+    "sha256": "7c170934954c6febd31a5103fc4f5ff2e9a8664b99412e33b2993caa0657d4f4"
+  },
+  "confusion_matrix.png": {
+    "experiment_id": "19",
+    "run_mode": "quick",
+    "run_ids": [
+      "quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e"
+    ],
+    "sha256": "d9b73e9430a1f9fc928c46414ecb2991bfc8ea6e714a9b6e1933096a571c4260"
+  },
+  "confidence_analysis.png": {
+    "experiment_id": "19",
+    "run_mode": "quick",
+    "run_ids": [
+      "quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e"
+    ],
+    "sha256": "93b49a6dca3cfea2a85b79d76b5eb7165da55e87ca14ac5d7ea823350445d8c6"
+  }
+}

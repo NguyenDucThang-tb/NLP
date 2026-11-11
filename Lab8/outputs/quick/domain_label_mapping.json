@@ -1,0 +1,16 @@
+{
+  "IMDb": {
+    "0": "Negative",
+    "1": "Positive"
+  },
+  "Yelp Polarity": {
+    "0": "Negative",
+    "1": "Positive"
+  },
+  "domain_b_source": "fancyzhx/yelp_polarity: test",
+  "yelp_raw_label_names": [
+    "1",
+    "2"
+  ],
+  "note": "compatible binary sentiment; Domain B is test only, never used for fitting or checkpoint selection"
+}

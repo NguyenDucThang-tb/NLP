@@ -1,0 +1,67 @@
+{
+  "quick-pretrained-fine_tuning-f0.1-l128-f17f7aaf3f7b": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-pretrained-fine_tuning-f0.25-l128-ebbd2f1d94a0": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-pretrained-fine_tuning-f0.5-l128-06487fa8a5e4": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-pretrained-fine_tuning-f1-l256-6ed333c9956d": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-pretrained-fine_tuning-f1-l64-012bfb3a72b0": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-pretrained-frozen-f1-l128-15b35f73e542": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 592130,
+    "encoder_trainable": false
+  },
+  "quick-scratch-fine_tuning-f0.1-l128-38aef12c5a46": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-scratch-fine_tuning-f0.25-l128-771c008a0c4a": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-scratch-fine_tuning-f0.5-l128-f78f0859f74b": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "quick-scratch-fine_tuning-f1-l128-7ac1e0072268": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "smoke-pretrained-fine_tuning-f1-l64-194431393eff": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  },
+  "smoke-scratch-fine_tuning-f1-l64-7b9aabaaff90": {
+    "total_parameters": 66955010,
+    "trainable_parameters": 66955010,
+    "encoder_trainable": true
+  }
+}

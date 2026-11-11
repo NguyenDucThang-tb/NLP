@@ -1,0 +1,91 @@
+{
+  "status": "TESTED",
+  "unit_tests": {
+    "status": "TESTED",
+    "passed": 14,
+    "log": "outputs/unit_tests.log"
+  },
+  "notebooks": {
+    "tokenization.ipynb": {
+      "status": "EXECUTED",
+      "code_cells": 7,
+      "all_cells_executed": true
+    },
+    "fine_tuning.ipynb": {
+      "status": "EXECUTED",
+      "code_cells": 14,
+      "all_cells_executed": true
+    }
+  },
+  "smoke": {
+    "status": "EXECUTED",
+    "train_validation_test": [
+      32,
+      16,
+      16
+    ],
+    "experiments": [
+      "14 scratch",
+      "14 pretrained"
+    ],
+    "max_length": 64,
+    "epochs": 1
+  },
+  "quick": {
+    "status": "EXECUTED",
+    "unique_training_runs": 11,
+    "result_rows": 18,
+    "train_validation_test": [
+      400,
+      200,
+      200
+    ],
+    "epochs": 2,
+    "test_metrics": {
+      "accuracy": 0.8,
+      "precision_macro": 0.803030303030303,
+      "recall_macro": 0.8,
+      "f1_macro": 0.7994987468671679,
+      "f1_binary": 0.7894736842105263
+    },
+    "confusion_matrix": [
+      [
+        85,
+        15
+      ],
+      [
+        25,
+        75
+      ]
+    ],
+    "error_availability": {
+      "FP": {
+        "available": 15,
+        "requested": 3,
+        "missing": 0
+      },
+      "FN": {
+        "available": 25,
+        "requested": 3,
+        "missing": 0
+      },
+      "high_confidence_wrong": {
+        "available": 2,
+        "requested": 2,
+        "missing": 0
+      }
+    },
+    "nested_subsets_checked": true,
+    "source_id_overlap": false,
+    "csv_duplicate_rows": false,
+    "checkpoint_selection": "validation macro-F1"
+  },
+  "full": "NOT_RUN",
+  "gpu_t4": "NOT_RUN",
+  "bert_base_uncased": "IMPLEMENTED_NOT_RUN",
+  "cpu_peak_memory": "not measured",
+  "hardware": {
+    "cpu_model": "12th Gen Intel(R) Core(TM) i7-12700H"
+  },
+  "recovered_setup_issue": "Jupyter local sockets were denied in sandbox; notebooks executed with approved kernel access."
+}

@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "/tmp/execute_lab08_notebook.py", line 10, in <module>
+    NotebookClient(n,timeout=2400,kernel_name='python3',resources={'metadata':{'path':str(root)}}).execute()
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/nbclient/client.py", line 693, in async_execute
+    async with self.async_setup_kernel(**kwargs):
+  File "/usr/lib/python3.12/contextlib.py", line 210, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/nbclient/client.py", line 648, in async_setup_kernel
+    await self.async_start_new_kernel(**kwargs)
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/nbclient/client.py", line 550, in async_start_new_kernel
+    await ensure_async(self.km.start_kernel(extra_arguments=self.extra_arguments, **kwargs))
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 214, in ensure_async
+    result = await obj
+             ^^^^^^^^^
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_client/manager.py", line 116, in wrapper
+    raise e
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_client/manager.py", line 107, in wrapper
+    out = await method(self, *args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_client/manager.py", line 528, in _async_start_kernel
+    kernel_cmd, kw = await self._async_pre_start_kernel(**kw)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_client/manager.py", line 493, in _async_pre_start_kernel
+    kw = await self.provisioner.pre_launch(**kw)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_client/provisioning/local_provisioner.py", line 216, in pre_launch
+    km.shell_port = lpc.find_available_port(km.ip)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nguyenducthang/.venv/lib/python3.12/site-packages/jupyter_client/connect.py", line 753, in find_available_port
+    tmp_sock = socket.socket()
+               ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted

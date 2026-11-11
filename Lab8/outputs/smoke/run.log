@@ -1,0 +1,8 @@
+2026-11-06 00:39:50,461 WARNING Using the latest cached version of the dataset since imdb couldn't be found on the Hugging Face Hub (offline mode is enabled).
+2026-11-06 00:39:50,462 WARNING Found the latest cached dataset configuration 'plain_text' at /home/nguyenducthang/.cache/huggingface/datasets/imdb/plain_text/0.0.0/e6281661ce1c48d982bc483cf8a173c1bbeb5d31 (last modified on Sat Oct 17 10:34:20 2026).
+2026-11-06 00:39:50,950 INFO train smoke-scratch-fine_tuning-f1-l64-7b9aabaaff90 samples=32 length=64
+2026-11-06 00:39:51,304 WARNING Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+2026-11-06 00:39:51,305 WARNING Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so
+2026-11-06 00:40:00,795 INFO epoch=1 train_loss=0.76052 val_loss=0.69132 val_macro_f1=0.45894
+2026-11-06 00:40:01,968 INFO train smoke-pretrained-fine_tuning-f1-l64-194431393eff samples=32 length=64
+2026-11-06 00:40:07,245 INFO epoch=1 train_loss=0.70482 val_loss=0.69656 val_macro_f1=0.37662

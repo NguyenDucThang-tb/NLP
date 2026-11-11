@@ -1,0 +1,17 @@
+{
+  "FP": {
+    "available": 15,
+    "requested": 3,
+    "missing": 0
+  },
+  "FN": {
+    "available": 25,
+    "requested": 3,
+    "missing": 0
+  },
+  "high_confidence_wrong": {
+    "available": 2,
+    "requested": 2,
+    "missing": 0
+  }
+}

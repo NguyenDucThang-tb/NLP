@@ -1,0 +1,69 @@
+2026-11-06 00:44:12,829 WARNING Using the latest cached version of the dataset since imdb couldn't be found on the Hugging Face Hub (offline mode is enabled).
+2026-11-06 00:44:12,830 WARNING Found the latest cached dataset configuration 'plain_text' at /home/nguyenducthang/.cache/huggingface/datasets/imdb/plain_text/0.0.0/e6281661ce1c48d982bc483cf8a173c1bbeb5d31 (last modified on Sat Oct 17 10:34:20 2026).
+2026-11-06 00:44:13,106 INFO train quick-scratch-fine_tuning-f1-l128-7ac1e0072268 samples=400 length=128
+2026-11-06 00:44:13,376 WARNING Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+2026-11-06 00:44:13,376 WARNING Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so
+2026-11-06 00:45:51,503 INFO epoch=1 train_loss=0.72898 val_loss=0.69296 val_macro_f1=0.33333
+2026-11-06 00:47:26,921 INFO epoch=2 train_loss=0.70137 val_loss=0.69581 val_macro_f1=0.33333
+2026-11-06 00:47:39,747 INFO train quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e samples=400 length=128
+2026-11-06 00:49:14,650 INFO epoch=1 train_loss=0.68294 val_loss=0.64652 val_macro_f1=0.56298
+2026-11-06 00:50:57,537 INFO epoch=2 train_loss=0.49417 val_loss=0.43914 val_macro_f1=0.79475
+2026-11-06 00:51:10,642 INFO train quick-pretrained-frozen-f1-l128-15b35f73e542 samples=400 length=128
+2026-11-06 00:51:43,314 INFO epoch=1 train_loss=0.69756 val_loss=0.68505 val_macro_f1=0.54416
+2026-11-06 00:52:19,878 INFO epoch=2 train_loss=0.67868 val_loss=0.67523 val_macro_f1=0.59294
+2026-11-06 00:52:31,648 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 00:52:31,663 INFO train quick-pretrained-fine_tuning-f0.1-l128-f17f7aaf3f7b samples=40 length=128
+2026-11-06 00:52:54,310 INFO epoch=1 train_loss=0.70672 val_loss=0.69199 val_macro_f1=0.49286
+2026-11-06 00:53:15,410 INFO epoch=2 train_loss=0.67863 val_loss=0.68830 val_macro_f1=0.53964
+2026-11-06 00:53:31,172 INFO train quick-pretrained-fine_tuning-f0.25-l128-ebbd2f1d94a0 samples=100 length=128
+2026-11-06 00:54:06,347 INFO epoch=1 train_loss=0.69480 val_loss=0.68316 val_macro_f1=0.63636
+2026-11-06 00:54:49,428 INFO epoch=2 train_loss=0.65428 val_loss=0.66376 val_macro_f1=0.62626
+2026-11-06 00:55:04,689 INFO train quick-pretrained-fine_tuning-f0.5-l128-06487fa8a5e4 samples=200 length=128
+2026-11-06 00:56:14,201 INFO epoch=1 train_loss=0.69250 val_loss=0.68724 val_macro_f1=0.35518
+2026-11-06 00:57:05,164 INFO epoch=2 train_loss=0.65919 val_loss=0.63349 val_macro_f1=0.67159
+2026-11-06 00:57:12,728 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 00:57:12,738 INFO train quick-scratch-fine_tuning-f0.1-l128-38aef12c5a46 samples=40 length=128
+2026-11-06 00:57:28,907 INFO epoch=1 train_loss=0.75869 val_loss=0.71660 val_macro_f1=0.33333
+2026-11-06 00:57:49,558 INFO epoch=2 train_loss=0.71007 val_loss=0.72686 val_macro_f1=0.33333
+2026-11-06 00:57:59,413 INFO train quick-scratch-fine_tuning-f0.25-l128-771c008a0c4a samples=100 length=128
+2026-11-06 00:58:29,415 INFO epoch=1 train_loss=0.73014 val_loss=0.71863 val_macro_f1=0.33333
+2026-11-06 00:58:59,514 INFO epoch=2 train_loss=0.70105 val_loss=0.69934 val_macro_f1=0.33333
+2026-11-06 00:59:07,524 INFO train quick-scratch-fine_tuning-f0.5-l128-f78f0859f74b samples=200 length=128
+2026-11-06 00:59:58,080 INFO epoch=1 train_loss=0.71970 val_loss=0.75018 val_macro_f1=0.33333
+2026-11-06 01:00:46,897 INFO epoch=2 train_loss=0.74237 val_loss=0.77204 val_macro_f1=0.33333
+2026-11-06 01:00:56,450 INFO reuse completed run quick-scratch-fine_tuning-f1-l128-7ac1e0072268
+2026-11-06 01:00:56,560 INFO train quick-pretrained-fine_tuning-f1-l64-012bfb3a72b0 samples=400 length=64
+2026-11-06 01:01:49,684 INFO epoch=1 train_loss=0.68914 val_loss=0.67648 val_macro_f1=0.43565
+2026-11-06 01:02:39,638 INFO epoch=2 train_loss=0.54959 val_loss=0.54610 val_macro_f1=0.72300
+2026-11-06 01:02:43,780 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:02:43,790 INFO train quick-pretrained-fine_tuning-f1-l256-6ed333c9956d samples=400 length=256
+2026-11-06 01:05:28,791 INFO epoch=1 train_loss=0.67232 val_loss=0.59056 val_macro_f1=0.73205
+2026-11-06 01:07:55,894 INFO epoch=2 train_loss=0.37572 val_loss=0.41507 val_macro_f1=0.81332
+2026-11-06 01:08:21,777 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:08:21,778 WARNING Using the latest cached version of the dataset since fancyzhx/yelp_polarity couldn't be found on the Hugging Face Hub (offline mode is enabled).
+2026-11-06 01:08:21,778 WARNING Found the latest cached dataset configuration 'plain_text' at /home/nguyenducthang/.cache/huggingface/datasets/fancyzhx___yelp_polarity/plain_text/0.0.0/bbf1c97a1f0cf005e5aded43839fd814654a1557 (last modified on Fri Nov  6 00:41:24 2026).
+2026-11-06 01:08:40,765 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:10:43,897 WARNING Using the latest cached version of the dataset since imdb couldn't be found on the Hugging Face Hub (offline mode is enabled).
+2026-11-06 01:10:43,899 WARNING Found the latest cached dataset configuration 'plain_text' at /home/nguyenducthang/.cache/huggingface/datasets/imdb/plain_text/0.0.0/e6281661ce1c48d982bc483cf8a173c1bbeb5d31 (last modified on Sat Oct 17 10:34:20 2026).
+2026-11-06 01:10:44,286 WARNING Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+2026-11-06 01:10:44,287 WARNING Failed to load /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /home/nguyenducthang/.venv/lib/python3.12/site-packages/torchao/_C_cutlass_90a.abi3.so
+2026-11-06 01:10:44,880 INFO reuse completed run quick-scratch-fine_tuning-f1-l128-7ac1e0072268
+2026-11-06 01:10:44,891 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:10:44,915 INFO reuse completed run quick-pretrained-frozen-f1-l128-15b35f73e542
+2026-11-06 01:10:44,924 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:10:44,946 INFO reuse completed run quick-pretrained-fine_tuning-f0.1-l128-f17f7aaf3f7b
+2026-11-06 01:10:44,956 INFO reuse completed run quick-pretrained-fine_tuning-f0.25-l128-ebbd2f1d94a0
+2026-11-06 01:10:44,970 INFO reuse completed run quick-pretrained-fine_tuning-f0.5-l128-06487fa8a5e4
+2026-11-06 01:10:44,979 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:10:44,988 INFO reuse completed run quick-scratch-fine_tuning-f0.1-l128-38aef12c5a46
+2026-11-06 01:10:44,996 INFO reuse completed run quick-scratch-fine_tuning-f0.25-l128-771c008a0c4a
+2026-11-06 01:10:45,005 INFO reuse completed run quick-scratch-fine_tuning-f0.5-l128-f78f0859f74b
+2026-11-06 01:10:45,015 INFO reuse completed run quick-scratch-fine_tuning-f1-l128-7ac1e0072268
+2026-11-06 01:10:45,130 INFO reuse completed run quick-pretrained-fine_tuning-f1-l64-012bfb3a72b0
+2026-11-06 01:10:45,140 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:10:45,149 INFO reuse completed run quick-pretrained-fine_tuning-f1-l256-6ed333c9956d
+2026-11-06 01:10:45,176 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:10:45,178 WARNING Using the latest cached version of the dataset since fancyzhx/yelp_polarity couldn't be found on the Hugging Face Hub (offline mode is enabled).
+2026-11-06 01:10:45,180 WARNING Found the latest cached dataset configuration 'plain_text' at /home/nguyenducthang/.cache/huggingface/datasets/fancyzhx___yelp_polarity/plain_text/0.0.0/bbf1c97a1f0cf005e5aded43839fd814654a1557 (last modified on Fri Nov  6 00:41:24 2026).
+2026-11-06 01:11:02,327 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+2026-11-06 01:11:12,727 INFO reuse completed run quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e

@@ -1,0 +1,9 @@
+experiment,status,message
+14,EXECUTED,"same architecture/tokenizer, validation comparison"
+15,EXECUTED,encoder requires_grad checked at model construction
+16,EXECUTED,all four nested fractions; scratch curve is optional
+17,EXECUTED,CPU peak memory not measured if no CUDA
+18,EXECUTED,A=IMDb B=Yelp Polarity; delta=B-A; nB=200
+19,EXECUTED,test n=200; reference=quick-pretrained-fine_tuning-f1-l128-b106a95c8b3e
+20,GENERATED,"{""FP"": {""available"": 15, ""requested"": 3, ""missing"": 0}, ""FN"": {""available"": 25, ""requested"": 3, ""missing"": 0}, ""high_confidence_wrong"": {""available"": 2, ""requested"": 2, ""missing"": 0}}"
+21,GENERATED,thresholds recorded in config; empty groups have null accuracy
