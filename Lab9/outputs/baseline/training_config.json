@@ -1,0 +1,11 @@
+{
+  "dataset": "tner/conll2003",
+  "train_sentences": 14041,
+  "train_words": 203618,
+  "seed": 42,
+  "estimator": "sklearn.linear_model.LogisticRegression",
+  "solver": "lbfgs",
+  "max_iter": 500,
+  "features": "token shape, prefixes/suffixes, previous/next lexical tokens",
+  "training_time_seconds": 20.571919957001228
+}

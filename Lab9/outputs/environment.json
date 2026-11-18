@@ -1,0 +1,31 @@
+{
+  "dataset_source": "tner/conll2003",
+  "dataset_license_note": "See the CoNLL-2003 dataset card and original Reuters data terms.",
+  "split_sizes_sentences": {
+    "train": 14041,
+    "validation": 3250,
+    "test": 3453
+  },
+  "split_sizes_words": {
+    "train": 203618,
+    "validation": 51360,
+    "test": 46427
+  },
+  "base_model": "distilbert/distilbert-base-cased",
+  "random_seed": 42,
+  "python": "3.12.3",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "packages": {
+    "torch": "2.15.0",
+    "transformers": "5.23.0",
+    "datasets": "4.8.5",
+    "accelerate": "1.16.0",
+    "scikit-learn": "1.9.1",
+    "seqeval": "1.2.2",
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "matplotlib": "3.11.2"
+  },
+  "cuda_available": false,
+  "gpu": null
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "entity_length": "1",
+    "gold_count": 3574,
+    "predicted_count": 4271,
+    "tp": 2733,
+    "fp": 1538,
+    "fn": 841,
+    "precision": 0.6398969796300632,
+    "recall": 0.7646894236149973,
+    "f1": 0.6967495219885277
+  },
+  {
+    "entity_length": "2",
+    "gold_count": 1776,
+    "predicted_count": 1595,
+    "tp": 1361,
+    "fp": 234,
+    "fn": 415,
+    "precision": 0.8532915360501567,
+    "recall": 0.7663288288288288,
+    "f1": 0.8074755265499851
+  },
+  {
+    "entity_length": "3",
+    "gold_count": 236,
+    "predicted_count": 129,
+    "tp": 92,
+    "fp": 37,
+    "fn": 144,
+    "precision": 0.7131782945736435,
+    "recall": 0.3898305084745763,
+    "f1": 0.5041095890410959
+  },
+  {
+    "entity_length": "4+",
+    "gold_count": 62,
+    "predicted_count": 19,
+    "tp": 12,
+    "fp": 7,
+    "fn": 50,
+    "precision": 0.631578947368421,
+    "recall": 0.1935483870967742,
+    "f1": 0.2962962962962963
+  }
+]

@@ -1,0 +1,71 @@
+[
+  {
+    "split": "train",
+    "sentences": 14041,
+    "words": 203618,
+    "entity_counts": {
+      "ORG": 6321,
+      "MISC": 3438,
+      "PER": 6600,
+      "LOC": 7140
+    },
+    "bio_label_counts": {
+      "B-ORG": 6321,
+      "O": 169575,
+      "B-MISC": 3438,
+      "B-PER": 6600,
+      "I-PER": 4528,
+      "B-LOC": 7140,
+      "I-ORG": 3704,
+      "I-MISC": 1155,
+      "I-LOC": 1157
+    },
+    "invalid_bio_sequences": 0
+  },
+  {
+    "split": "validation",
+    "sentences": 3250,
+    "words": 51360,
+    "entity_counts": {
+      "ORG": 1341,
+      "LOC": 1837,
+      "MISC": 922,
+      "PER": 1842
+    },
+    "bio_label_counts": {
+      "O": 42757,
+      "B-ORG": 1341,
+      "B-LOC": 1837,
+      "B-MISC": 922,
+      "I-MISC": 346,
+      "B-PER": 1842,
+      "I-PER": 1307,
+      "I-LOC": 257,
+      "I-ORG": 751
+    },
+    "invalid_bio_sequences": 0
+  },
+  {
+    "split": "test",
+    "sentences": 3453,
+    "words": 46427,
+    "entity_counts": {
+      "PER": 1617,
+      "LOC": 1668,
+      "MISC": 702,
+      "ORG": 1661
+    },
+    "bio_label_counts": {
+      "O": 38315,
+      "B-LOC": 1668,
+      "B-PER": 1617,
+      "I-PER": 1156,
+      "I-LOC": 257,
+      "B-MISC": 702,
+      "I-MISC": 216,
+      "B-ORG": 1661,
+      "I-ORG": 835
+    },
+    "invalid_bio_sequences": 0
+  }
+]
