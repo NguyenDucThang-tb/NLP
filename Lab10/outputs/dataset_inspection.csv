@@ -1,0 +1,4 @@
+split,samples,question_words_mean,context_words_median,context_words_p95,answer_offset_matches,answer_offset_mismatches
+train,64,9.46875,108.0,220.79999999999995,64,0
+validation,16,9.4375,131.5,225.25,16,0
+test,16,9.3125,98.0,169.0,16,0

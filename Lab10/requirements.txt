@@ -1,0 +1,9 @@
+transformers>=4.40,<6
+datasets>=2.19,<5
+numpy>=1.26
+pandas>=2.1
+matplotlib>=3.8
+tqdm>=4.66
+accelerate>=0.30
+nbformat>=5.10
+
