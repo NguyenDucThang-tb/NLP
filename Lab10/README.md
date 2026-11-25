@@ -55,8 +55,8 @@ python -m pip install -r requirements.txt
 1. Push repository lên GitHub; mở notebook trong Colab và chọn **Runtime → Change runtime type → T4 GPU**.
 2. Chạy cell setup đầu notebook. Cell sẽ tìm `Lab10/qa_model.py` hoặc clone repo vào `/content/NLP`.
 3. Chạy cell cài dependency; xác nhận `torch.cuda.is_available()` là `True` trước khi FULL.
-4. Hoàn thành `prediction.md`, đọc `student_implementation_guide.md`, rồi tự triển khai các TODO alignment và metric trong `qa_model.py`.
-5. Chạy `tokenizer_alignment.ipynb`; sau đó chọn `MODE="QUICK"`, bật `RUN_TRAINING=True` để smoke test; chỉ khi QUICK qua mới chuyển `MODE="FULL"`.
+4. Đọc `student_implementation_guide.md` để hiểu alignment, window labels, span decoding và EM/F1 đã được triển khai trong `qa_model.py`.
+5. Chạy `tokenizer_alignment.ipynb` để chạy lại student QA tests. Trong `qa_finetuning.ipynb`, test suite được chạy trước khi các execution gates mở. Sau đó đặt `RUN_TRAINING=True` và chạy `MODE="QUICK"`; chỉ chuyển `MODE="FULL"` sau khi QUICK hoàn tất.
 6. Tải `Lab10/outputs/`, notebook outputs và PNG/CSV về máy hoặc đồng bộ lên Drive. Checkpoints bị ignore để tránh commit file lớn.
 
 Nếu notebook mở trực tiếp từ GitHub nhưng runtime báo thiếu thư mục, cần clone repo trong runtime; mở notebook từ trang GitHub không tự tạo checkout trong `/content`.
@@ -72,23 +72,18 @@ Các số trên là **proposed configuration**, chưa phải actual run. Actual 
 1. `calculations.md`: mục 6–8, 12, 19 và learning check.
 2. `prediction.md`: mục 9; hoàn thành trước khi xem baseline/experiment outputs.
 3. `tokenizer_alignment.ipynb`: mục 10, 11, 13, 15, 16 — tokenizer inputs, offsets, overflow windows và test cases.
-4. `qa_model.py`: baseline mục 21, QA model start/end forward, train utilities, TODO interfaces cho alignment, decoding và EM/F1.
+4. `qa_model.py`: baseline mục 21, QA model, training utilities, alignment, feature preparation, span decoding, EM/F1 và phân loại sai biên.
 5. `qa_finetuning.ipynb`: mục 14, 17, 20, 22, 23, 24, 25; QUICK trước, FULL sau.
 6. `document_qa.py`: mục 27 — câu hỏi và context/tệp text được cung cấp trực tiếp, không có retrieval/RAG.
 7. `error_analysis.md`, `reflection.md`: sinh viên tự hoàn thiện từ output thật.
 
-## Student-owned TODOs — must finish before training
+## Implemented algorithms and test gate
 
-`qa_model.py` cố ý để `NotImplementedError` tại:
+Các hàm alignment, train/validation feature preparation, answer coverage, span decoding, chuẩn hóa SQuAD, Exact Match, token F1, aggregation theo ID và phân loại span errors đã được triển khai trong `qa_model.py`. `tests/test_qa_student.py` chứa expected cases hoạt động, không còn test TODO bị skip.
 
-- `character_to_token_span`, `prepare_train_features`, `prepare_validation_features`, `window_answer_coverage`.
-- `decode_qa_predictions`.
-- `normalize_answer`, `exact_match_score`, `token_f1_score`, `score_one_example`, `evaluate_predictions`.
-- `classify_span_errors`.
+Trước khi training, `qa_finetuning.ipynb` chạy toàn bộ unit tests. Các cờ alignment/metrics/error-analysis chỉ được mở nếu suite thành công và không có test skip. `RUN_TRAINING` vẫn mặc định `False`, để người học chủ động chọn QUICK trước FULL.
 
-`student_implementation_guide.md` giải thích nguyên lý, công thức, ví dụ, thứ tự làm và checklist edge cases mà không thay sinh viên viết các hàm này.
-
-Notebook không bật training mặc định. Chỉ bật sau khi alignment/metric đã tự cài đặt và test do sinh viên hoàn tất. `tests/test_qa_framework.py` kiểm thử phần boilerplate đã triển khai; các alignment/metric tests được ghi rõ **SKIPPED — student TODO**, không tính là PASS.
+Các triển khai được tạo với AI hỗ trợ. Hãy đọc guide, rà lại công thức và hiểu output tests trước khi chạy; khai báo AI contribution trong reflection. Không có kết quả training nào được tạo trong bước kiểm thử code này.
 
 ## Outputs
 
@@ -101,29 +96,29 @@ Sau run thật, notebook ghi:
 
 Nếu một run chưa hoàn thành, giữ trạng thái NOT_RUN/INCOMPLETE, không thêm dòng metrics giả. Khi tự hoàn thiện module metrics, giữ thang 0–100 nhất quán với quy ước SQuAD evaluator.
 
-## Local checks performed for this handoff
+## Local verification status
 
-- `python -m unittest discover -s tests -v`: **13 passed, 32 skipped, 0 failed**. Skips are the student-owned alignment, feature, decoding, metric and error-classification cases.
-- `python -m py_compile qa_model.py document_qa.py tests/*.py`: passed.
-- Both notebooks: JSON valid and all code cells parse successfully; notebook cells were **not executed**.
-- No SQuAD download, pretrained training, QA result CSV or result plot was produced in this local check. CUDA is unavailable in the local runtime.
+- Unit suite: **45 passed, 0 failed, 0 skipped** after implementing the QA algorithms and replacing placeholder tests with explicit cases.
+- `qa_model.py`, `document_qa.py` and tests pass Python syntax compilation.
+- No pretrained SQuAD fine-tuning, formal result CSV or experiment plots have been generated; the local runtime has no CUDA.
+- Colab T4 execution has not been verified from this local environment.
 
 ## AI usage and remaining work
 
-- **Generated:** project boilerplate, dataset split scaffold, keyword-overlap baseline, model loading/forward/train utilities, notebook structure, plots/export scaffold, and tests for non-restricted utilities.
+- **Generated with AI assistance:** project boilerplate, split scaffold, keyword baseline, training utilities, notebook setup, alignment/feature preparation, span decoding, SQuAD metrics, span-error categories and tests.
 - **Modified:** split policy made reproducible and article-disjoint; one stride (64) is proposed for controlled context-length runs.
-- **Verified:** framework tests and syntax checks listed above. No SQuAD model training or experiment metrics are claimed yet.
-- **Student must complete:** calculations, predictions, character/token alignment, span decoding, QA EM/F1, error explanations, reflection and learning checks.
+- **Verified:** all 45 unit tests and Python syntax checks pass. No pretrained SQuAD model training or experiment metrics are claimed yet.
+- **Student must complete:** inspect/understand the AI-assisted algorithms, run QUICK/FULL on Colab, and write evidence-based interpretation, error explanations, reflection and learning checks.
 
 ## Known limitations
 
 - The public dataset split has no labeled test split in this setup; evaluation uses a reproducible article-disjoint partition of its original validation split. Report it as a held-out evaluation partition, not an official hidden test.
 - The model cannot provide reliable no-answer behavior from SQuAD v1.1. SQuAD 2.0 is optional and excluded from core.
-- Training and all metric plots remain NOT_RUN until student TODOs are implemented and a Colab/local runtime completes the experiments.
+- Training and experiment metric plots remain NOT_RUN until QUICK/FULL actually run in a suitable runtime.
 
 ## Current readiness
 
 - Framework, split checks, result upsert, checkpoint/resume utilities, gradient accumulation and experiment notebook scaffolds are implemented.
-- QUICK and FULL are **not runnable yet**: training remains gated until student alignment, span decoding and EM/F1 implementations pass their tests.
-- No SQuAD download, pretrained fine-tuning, full experiment, metric CSV or result plot is claimed as completed by this checkout.
-- Colab T4 execution is prepared but not verified from this local environment. Confirm `torch.cuda.is_available()` in Colab, run QUICK first, and use FULL only after all gates pass.
+- Code and test gates are ready for Colab QUICK; `RUN_TRAINING` remains off by default. Set it to `True` after confirming the test suite passes in the Colab runtime.
+- No pretrained fine-tuning, full experiment, metric CSV or result plot is claimed as completed by this checkout.
+- GPU execution is **NOT_VERIFIED**. Confirm CUDA/T4 in Colab, finish QUICK first, and run FULL only after reviewing its actual outputs.

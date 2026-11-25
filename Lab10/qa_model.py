@@ -1,7 +1,7 @@
-"""Utilities and student implementation interfaces for the LAB 10 QA project.
+"""Utilities and tested implementations for the LAB 10 extractive QA project.
 
-Character/token alignment, span decoding, and QA EM/F1 are intentional TODOs:
-W10.pdf reserves those calculations for the student.
+The alignment, decoding, SQuAD metric and span-error routines are exercised by
+unit tests before the notebook opens its training gate.
 """
 
 from __future__ import annotations
@@ -434,62 +434,379 @@ def train_with_validation(model: Any, train_loader: Any, validation_loader: Any,
 
 
 def character_to_token_span(offset_mapping: Any, sequence_ids: Sequence[int | None], answer_start: int, answer_text: str) -> tuple[int, int] | None:
-    """TODO(student): return inclusive token endpoints, or None when not in this feature."""
-    raise NotImplementedError("Student TODO: implement character-to-token alignment from W10.pdf")
+    """Map a complete end-exclusive character span to inclusive context-token indices."""
+    if not answer_text or answer_start < 0 or len(offset_mapping) != len(sequence_ids):
+        return None
+
+    answer_end = answer_start + len(answer_text)
+    context_offsets: list[tuple[int, int, int]] = []
+    for token_index, (offset, sequence_id) in enumerate(zip(offset_mapping, sequence_ids)):
+        if sequence_id != 1 or offset is None or len(offset) != 2:
+            continue
+        token_start, token_end = int(offset[0]), int(offset[1])
+        # (0, 0) is used for special/padding tokens; empty offsets are not tokens.
+        if token_start < 0 or token_end <= token_start:
+            continue
+        context_offsets.append((token_index, token_start, token_end))
+
+    if not context_offsets:
+        return None
+
+    # Reject answers outside or clipped by either edge of this context window.
+    window_start = min(start for _, start, _ in context_offsets)
+    window_end = max(end for _, _, end in context_offsets)
+    if answer_start < window_start or answer_end > window_end:
+        return None
+
+    overlapping = [
+        token_index for token_index, token_start, token_end in context_offsets
+        if token_start < answer_end and token_end > answer_start
+    ]
+    if not overlapping:
+        return None
+    return overlapping[0], overlapping[-1]
 
 
 def prepare_train_features(tokenizer: Any, examples: Sequence[dict[str, Any]], max_length: int, stride: int) -> list[dict[str, Any]]:
-    """TODO(student): tokenize question/context windows and attach start/end labels."""
-    raise NotImplementedError("Student TODO: implement overflow feature creation and answer alignment")
+    """Tokenize train examples into context windows and attach inclusive span labels."""
+    if not examples:
+        return []
+    if not getattr(tokenizer, "is_fast", False):
+        raise ValueError("A fast tokenizer is required for offset and sequence alignment")
+
+    questions = [str(example["question"]).lstrip() for example in examples]
+    contexts = [str(example["context"]) for example in examples]
+    encoded = tokenizer(
+        questions, contexts, truncation="only_second", max_length=max_length,
+        stride=stride, return_overflowing_tokens=True, return_offsets_mapping=True,
+        padding=False,
+    )
+    mapping = encoded.get("overflow_to_sample_mapping")
+    if mapping is None:
+        raise KeyError("Tokenizer did not return overflow_to_sample_mapping")
+
+    features: list[dict[str, Any]] = []
+    for feature_index, source_index_value in enumerate(mapping):
+        source_index = int(source_index_value)
+        if not 0 <= source_index < len(examples):
+            raise ValueError(f"Invalid overflow source index: {source_index}")
+        input_ids = list(encoded["input_ids"][feature_index])
+        sequence_ids = encoded.sequence_ids(feature_index)
+        offsets = encoded["offset_mapping"][feature_index]
+        answers = examples[source_index].get("answers", {})
+        answer_texts = list(answers.get("text") or [])
+        answer_starts = list(answers.get("answer_start") or [])
+
+        cls_id = getattr(tokenizer, "cls_token_id", None)
+        try:
+            cls_position = input_ids.index(int(cls_id)) if cls_id is not None else 0
+        except ValueError:
+            cls_position = 0
+
+        aligned_span = None
+        for answer_text, answer_start in zip(answer_texts, answer_starts):
+            aligned_span = character_to_token_span(offsets, sequence_ids, int(answer_start), str(answer_text))
+            if aligned_span is not None:
+                break
+
+        row = {
+            key: list(encoded[key][feature_index])
+            for key in tokenizer.model_input_names
+            if key in encoded and key != "offset_mapping"
+        }
+        row["input_ids"] = input_ids
+        row["start_positions"], row["end_positions"] = aligned_span or (cls_position, cls_position)
+        row["overflow_to_sample_mapping"] = source_index
+        features.append(row)
+    return features
 
 
 def prepare_validation_features(tokenizer: Any, examples: Sequence[dict[str, Any]], max_length: int, stride: int) -> list[dict[str, Any]]:
-    """TODO(student): tokenize windows while preserving offsets and sample mapping."""
-    raise NotImplementedError("Student TODO: implement validation feature preparation")
+    """Create validation windows with enough metadata to restore spans in original contexts."""
+    if not examples:
+        return []
+    if not getattr(tokenizer, "is_fast", False):
+        raise ValueError("A fast tokenizer is required for offset and sequence alignment")
+
+    questions = [str(example["question"]).lstrip() for example in examples]
+    contexts = [str(example["context"]) for example in examples]
+    encoded = tokenizer(
+        questions, contexts, truncation="only_second", max_length=max_length,
+        stride=stride, return_overflowing_tokens=True, return_offsets_mapping=True,
+        padding=False,
+    )
+    mapping = encoded.get("overflow_to_sample_mapping")
+    if mapping is None:
+        raise KeyError("Tokenizer did not return overflow_to_sample_mapping")
+
+    features: list[dict[str, Any]] = []
+    for feature_index, source_index_value in enumerate(mapping):
+        source_index = int(source_index_value)
+        if not 0 <= source_index < len(examples):
+            raise ValueError(f"Invalid overflow source index: {source_index}")
+        sequence_ids = encoded.sequence_ids(feature_index)
+        raw_offsets = encoded["offset_mapping"][feature_index]
+        offsets = []
+        for offset, sequence_id in zip(raw_offsets, sequence_ids):
+            if sequence_id != 1 or offset is None or len(offset) != 2 or int(offset[1]) <= int(offset[0]):
+                offsets.append(None)
+            else:
+                offsets.append((int(offset[0]), int(offset[1])))
+
+        row = {
+            key: list(encoded[key][feature_index])
+            for key in tokenizer.model_input_names
+            if key in encoded and key != "offset_mapping"
+        }
+        row.update({
+            "example_id": str(examples[source_index].get("id", source_index)),
+            "offset_mapping": offsets,
+            "sequence_ids": list(sequence_ids),
+            "overflow_to_sample_mapping": source_index,
+        })
+        features.append(row)
+    return features
 
 
 def window_answer_coverage(example: dict[str, Any], feature: dict[str, Any]) -> bool:
-    """TODO(student): determine whether a feature window contains a full answer span."""
-    raise NotImplementedError("Student TODO: implement window answer coverage using offsets")
+    """Return whether this feature contains at least one full annotated answer span."""
+    answers = example.get("answers", {})
+    texts = list(answers.get("text") or [])
+    starts = list(answers.get("answer_start") or [])
+    offsets = feature.get("offset_mapping")
+    sequence_ids = feature.get("sequence_ids")
+    if offsets is None or sequence_ids is None:
+        raise KeyError("Validation feature must preserve offsets and sequence_ids")
+    return any(
+        character_to_token_span(offsets, sequence_ids, int(start), str(text)) is not None
+        for text, start in zip(texts, starts)
+    )
 
 
 def decode_qa_predictions(examples: Sequence[dict[str, Any]], features: Sequence[dict[str, Any]], start_logits: Any, end_logits: Any, max_answer_length: int = 30) -> list[dict[str, Any]]:
-    """TODO(student): return rows with id, prediction, start_char, and end_char."""
-    raise NotImplementedError("Student TODO: implement start/end span post-processing")
+    """Decode the best valid context span per example, aggregating all overflow windows."""
+    if max_answer_length < 1:
+        raise ValueError("max_answer_length must be positive")
+
+    def rows(values: Any) -> list[list[float]]:
+        if hasattr(values, "detach"):
+            values = values.detach().cpu().numpy()
+        if hasattr(values, "tolist"):
+            values = values.tolist()
+        values = list(values)
+        if values and isinstance(values[0], (int, float)):
+            return [[float(value) for value in values]]
+        return [[float(value) for value in (row.tolist() if hasattr(row, "tolist") else row)] for row in values]
+
+    starts_by_feature, ends_by_feature = rows(start_logits), rows(end_logits)
+    if len(starts_by_feature) != len(features) or len(ends_by_feature) != len(features):
+        raise ValueError("There must be one start/end logit row for each feature")
+
+    id_to_index = {str(example.get("id", index)): index for index, example in enumerate(examples)}
+    best: dict[int, tuple[float, int, int, int, int, int]] = {}
+    # tuple: score, feature index, start token, end token, start char, end char
+    for feature_index, feature in enumerate(features):
+        if "overflow_to_sample_mapping" in feature:
+            example_index = int(feature["overflow_to_sample_mapping"])
+        else:
+            example_id = str(feature.get("example_id", ""))
+            if example_id not in id_to_index:
+                raise KeyError(f"Feature has no valid source-example mapping: {example_id!r}")
+            example_index = id_to_index[example_id]
+        if not 0 <= example_index < len(examples):
+            raise ValueError(f"Invalid feature source index: {example_index}")
+
+        offsets = feature.get("offset_mapping")
+        sequence_ids = feature.get("sequence_ids")
+        if offsets is None or sequence_ids is None or len(offsets) != len(sequence_ids):
+            raise ValueError("Each validation feature needs aligned offsets and sequence_ids")
+        start_row, end_row = starts_by_feature[feature_index], ends_by_feature[feature_index]
+        usable = []
+        for token_index, (offset, sequence_id) in enumerate(zip(offsets, sequence_ids)):
+            if token_index >= len(start_row) or token_index >= len(end_row) or sequence_id != 1 or offset is None:
+                continue
+            if len(offset) != 2 or int(offset[0]) < 0 or int(offset[1]) <= int(offset[0]):
+                continue
+            usable.append(token_index)
+        if not usable:
+            continue
+
+        # The top-20 context starts/ends follow the standard QA n-best candidate strategy.
+        start_candidates = sorted(usable, key=lambda i: (-start_row[i], i))[:20]
+        end_candidates = sorted(usable, key=lambda i: (-end_row[i], i))[:20]
+        context = str(examples[example_index]["context"])
+        for start_index in start_candidates:
+            for end_index in end_candidates:
+                token_length = end_index - start_index + 1
+                if end_index < start_index or token_length > max_answer_length:
+                    continue
+                start_char = int(offsets[start_index][0])
+                end_char = int(offsets[end_index][1])
+                if start_char < 0 or end_char <= start_char or end_char > len(context):
+                    continue
+                score = start_row[start_index] + end_row[end_index]
+                candidate = (score, feature_index, start_index, end_index, start_char, end_char)
+                current = best.get(example_index)
+                # Highest score wins; ties prefer earlier feature and token positions.
+                if current is None or (score, -feature_index, -start_index, -end_index) > (
+                    current[0], -current[1], -current[2], -current[3]
+                ):
+                    best[example_index] = candidate
+
+    predictions = []
+    for example_index, example in enumerate(examples):
+        candidate = best.get(example_index)
+        if candidate is None:
+            prediction, start_char, end_char = "", None, None
+        else:
+            _, _, _, _, start_char, end_char = candidate
+            prediction = str(example["context"])[start_char:end_char]
+        predictions.append({
+            "id": str(example.get("id", example_index)), "prediction": prediction,
+            "start_char": start_char, "end_char": end_char,
+        })
+    return predictions
 
 
 def normalize_answer(text: str) -> str:
-    """TODO(student): implement the normalization specified for QA evaluation."""
-    raise NotImplementedError("Student TODO: implement answer normalization")
+    """Apply the official SQuAD lowercase/punctuation/article/whitespace normalization."""
+    import string
+
+    text = str(text or "").lower()
+    punctuation = set(string.punctuation)
+    text = "".join(char for char in text if char not in punctuation)
+    text = re.sub(r"\b(a|an|the)\b", " ", text)
+    return " ".join(text.split())
 
 
 def exact_match_score(prediction: str, gold_answers: Sequence[str]) -> float:
-    """TODO(student): implement normalized exact match over acceptable references."""
-    raise NotImplementedError("Student TODO: implement Exact Match")
+    """Return the best normalized Exact Match over references on a 0–1 scale."""
+    references = list(gold_answers or [""])
+    normalized_prediction = normalize_answer(prediction)
+    return float(any(normalized_prediction == normalize_answer(reference) for reference in references))
 
 
 def token_f1_score(prediction: str, gold_answers: Sequence[str]) -> float:
-    """TODO(student): implement QA token-overlap F1, not classification/entity F1."""
-    raise NotImplementedError("Student TODO: implement QA token F1")
+    """Return maximum multiset token-overlap F1 over references on a 0–1 scale."""
+    from collections import Counter
+
+    prediction_tokens = normalize_answer(prediction).split()
+    references = list(gold_answers or [""])
+    scores = []
+    for reference in references:
+        reference_tokens = normalize_answer(reference).split()
+        if not prediction_tokens or not reference_tokens:
+            scores.append(float(prediction_tokens == reference_tokens))
+            continue
+        overlap = sum((Counter(prediction_tokens) & Counter(reference_tokens)).values())
+        if overlap == 0:
+            scores.append(0.0)
+            continue
+        precision = overlap / len(prediction_tokens)
+        recall = overlap / len(reference_tokens)
+        scores.append(2 * precision * recall / (precision + recall))
+    return max(scores, default=0.0)
 
 
 def score_one_example(prediction: str, gold_answers: Sequence[str]) -> dict[str, float]:
-    """TODO(student): return per-example EM/F1 on the 0-100 SQuAD scale."""
-    raise NotImplementedError("Student TODO: implement per-example EM and token F1")
+    """Return per-example SQuAD EM/F1 on the official 0–100 scale."""
+    references = list(gold_answers or [""])
+    return {
+        "em": 100.0 * exact_match_score(prediction, references),
+        "f1": 100.0 * token_f1_score(prediction, references),
+    }
 
 
 def evaluate_predictions(predictions: Sequence[dict[str, Any]], references: Sequence[dict[str, Any]]) -> dict[str, float]:
-    """TODO(student): aggregate EM/F1 on 0-100 scale from id/prediction and id/answers rows."""
-    raise NotImplementedError("Student TODO: implement dataset-level EM and token F1")
+    """Aggregate EM/F1 by reference ID; missing predictions count as empty strings."""
+    prediction_by_id: dict[str, str] = {}
+    for row in predictions:
+        sample_id = str(row["id"])
+        if sample_id in prediction_by_id:
+            raise ValueError(f"Duplicate prediction ID: {sample_id}")
+        prediction_by_id[sample_id] = str(row.get("prediction", row.get("answer", "")) or "")
+
+    reference_by_id: dict[str, Sequence[str]] = {}
+    for row in references:
+        sample_id = str(row["id"])
+        if sample_id in reference_by_id:
+            raise ValueError(f"Duplicate reference ID: {sample_id}")
+        answers = row.get("answers", {})
+        if isinstance(answers, dict):
+            gold_answers = answers.get("text", [])
+        else:
+            gold_answers = answers or []
+        reference_by_id[sample_id] = [str(answer) for answer in gold_answers]
+
+    if not reference_by_id:
+        return {"em": 0.0, "f1": 0.0}
+    scores = [
+        score_one_example(prediction_by_id.get(sample_id, ""), gold_answers)
+        for sample_id, gold_answers in reference_by_id.items()
+    ]
+    count = len(scores)
+    return {
+        "em": sum(score["em"] for score in scores) / count,
+        "f1": sum(score["f1"] for score in scores) / count,
+    }
 
 
 def classify_span_errors(question: str, context: str, gold_answers: dict[str, Sequence[Any]], prediction: dict[str, Any]) -> dict[str, Any]:
-    """TODO(student): return wrong_start/wrong_end/wrong_span/error_type flags.
+    """Classify predicted span boundaries against all gold character spans."""
+    del question  # Error type describes observed span geometry, not semantic cause.
+    gold_texts = list(gold_answers.get("text", []))
+    gold_starts = list(gold_answers.get("answer_start", []))
+    gold_spans = []
+    for text, start in zip(gold_texts, gold_starts):
+        text, start = str(text), int(start)
+        end = start + len(text)
+        if text and 0 <= start < end <= len(context) and context[start:end] == text:
+            gold_spans.append((start, end))
 
-    Compare predicted character offsets against every annotated gold span in the
-    original context; do not compare token indices from different windows.
-    """
-    raise NotImplementedError("Student TODO: classify wrong start/end/span from inspected evidence")
+    pred_start = prediction.get("start_char")
+    pred_end = prediction.get("end_char")
+    if pred_start is not None and pred_end is not None:
+        pred_start, pred_end = int(pred_start), int(pred_end)
+        if pred_start < 0 or pred_end <= pred_start or pred_end > len(context):
+            pred_start = pred_end = None
+    else:
+        pred_start = pred_end = None
+
+    if not gold_spans:
+        return {"wrong_start": True, "wrong_end": True, "wrong_span": True,
+                "error_type": "unscorable", "overlap_type": "none"}
+
+    exact = pred_start is not None and (pred_start, pred_end) in gold_spans
+    if exact:
+        return {"wrong_start": False, "wrong_end": False, "wrong_span": False,
+                "error_type": "correct", "overlap_type": "full"}
+
+    if pred_start is None:
+        selected_gold = gold_spans[0]
+        overlap = 0
+    else:
+        def span_evidence(span: tuple[int, int]):
+            gold_start, gold_end = span
+            overlap_chars = max(0, min(pred_end, gold_end) - max(pred_start, gold_start))
+            matched_boundaries = int(pred_start == gold_start) + int(pred_end == gold_end)
+            boundary_distance = abs(pred_start - gold_start) + abs(pred_end - gold_end)
+            return matched_boundaries, overlap_chars, -boundary_distance
+        selected_gold = max(gold_spans, key=span_evidence)
+        overlap = max(0, min(pred_end, selected_gold[1]) - max(pred_start, selected_gold[0]))
+
+    wrong_start = pred_start != selected_gold[0]
+    wrong_end = pred_end != selected_gold[1]
+    overlap_type = "partial" if overlap else "none"
+    if not overlap:
+        error_type = "non_overlapping"
+    elif wrong_start and wrong_end:
+        error_type = "both_boundaries_wrong"
+    elif wrong_start:
+        error_type = "wrong_start_only"
+    else:
+        error_type = "wrong_end_only"
+    return {"wrong_start": wrong_start, "wrong_end": wrong_end, "wrong_span": True,
+            "error_type": error_type, "overlap_type": overlap_type}
 
 
 def question_content_words(question: str) -> set[str]:

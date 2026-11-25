@@ -1,6 +1,6 @@
 # Hướng dẫn các phần sinh viên tự triển khai — LAB 10
 
-Tài liệu này giải thích đầu vào, đầu ra, công thức và thứ tự làm cho các hàm còn `NotImplementedError` trong `qa_model.py`. Hãy tự viết hàm và bật test sau khi tự xác nhận expected output. Character offsets dùng khoảng **[start, end)**; chỉ số token start/end là inclusive.
+Tài liệu này giải thích đầu vào, đầu ra, công thức và edge cases của các hàm QA trong `qa_model.py`. Các hàm hiện đã có implementation và test expected cases; hãy đọc, chạy test và tự xác nhận bạn hiểu quyết định thuật toán trước khi huấn luyện. Character offsets dùng khoảng **[start, end)**; chỉ số token start/end là inclusive.
 
 ## 1. Character span sang token span
 
@@ -79,4 +79,4 @@ Ví dụ: prediction `"the blue car"`, reference `"blue car"`: sau normalization
 - Metrics: exact, partial overlap, no overlap, case, punctuation, articles, whitespace, repeated tokens, empty strings, nhiều references.
 - Split: không giao article title giữa train/validation/held-out; IDs không lặp trong mỗi split.
 
-`tests/test_qa_student.py` để các test ở trạng thái skipped cho đến khi sinh viên tự ghi expected values đã kiểm chứng. Không đổi expected output chỉ để làm test qua.
+`tests/test_qa_student.py` chứa expected values rõ ràng cho alignment, feature preparation, decoding, metrics và error classification. Các test chạy bình thường; không đổi expected output chỉ để làm test qua. Lần xác minh hiện tại: 45 PASS, 0 FAIL, 0 SKIPPED.

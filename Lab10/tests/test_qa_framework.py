@@ -182,17 +182,27 @@ class TestModelPlumbingSmoke(unittest.TestCase):
 
 
 class TestStudentTODOHarness(unittest.TestCase):
-    @unittest.skip("STUDENT TODO: implement character/token alignment, then enable alignment test cases")
     def test_alignment_cases(self):
-        self.fail("Add student-verified expected token spans for single/multi/subtoken/repeated/window cases")
+        from qa_model import character_to_token_span
+        self.assertEqual(character_to_token_span([(10, 13), (14, 18)], [1, 1], 10, "red fox"), (0, 1))
+        self.assertEqual(character_to_token_span([(10, 16)], [1], 12, "fox"), (0, 0))
+        self.assertIsNone(character_to_token_span([(100, 104)], [1], 98, "abcdef"))
 
-    @unittest.skip("STUDENT TODO: implement SQuAD normalization, Exact Match and token F1 before enabling")
     def test_metric_cases(self):
-        self.fail("Add expected scores for exact, no-overlap, partial-overlap, casing, punctuation and multi-reference cases")
+        from qa_model import exact_match_score, token_f1_score
+        self.assertEqual(exact_match_score("The Cat!", ["cat"]), 1.0)
+        self.assertEqual(token_f1_score("red", ["blue"]), 0.0)
+        self.assertEqual(token_f1_score("blue car", ["blue truck"]), 0.5)
 
-    @unittest.skip("STUDENT TODO: implement answer-window coverage using character offsets before enabling")
     def test_window_coverage(self):
-        self.fail("Check contained answer, truncated answer and answer in another sliding window")
+        from qa_model import window_answer_coverage
+        example = {"answers": {"text": ["answer"], "answer_start": [102]}}
+        complete = {"offset_mapping": [None, (100, 110)], "sequence_ids": [None, 1]}
+        clipped = {"offset_mapping": [None, (104, 108)], "sequence_ids": [None, 1]}
+        elsewhere = {"offset_mapping": [None, (10, 20)], "sequence_ids": [None, 1]}
+        self.assertTrue(window_answer_coverage(example, complete))
+        self.assertFalse(window_answer_coverage(example, clipped))
+        self.assertFalse(window_answer_coverage(example, elsewhere))
 
 
 if __name__ == "__main__":
