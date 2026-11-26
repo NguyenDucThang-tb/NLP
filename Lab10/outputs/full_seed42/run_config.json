@@ -1,0 +1,49 @@
+{
+  "mode": "FULL",
+  "dataset_id": "rajpurkar/squad",
+  "model_id": "distilbert-base-uncased",
+  "seed": 42,
+  "max_length": 384,
+  "stride": 64,
+  "batch_size": 8,
+  "learning_rate": 3e-05,
+  "epochs": 2,
+  "optimizer_name": "AdamW",
+  "weight_decay": 0.01,
+  "truncation": "only_second",
+  "return_overflowing_tokens": true,
+  "return_offsets_mapping": true,
+  "max_train_samples": 10000,
+  "max_validation_samples": 1000,
+  "max_test_samples": 1000,
+  "quick_train_samples": 64,
+  "quick_validation_samples": 16,
+  "quick_test_samples": 16,
+  "max_answer_length": 30,
+  "mixed_precision": true,
+  "gradient_accumulation_steps": 1,
+  "context_lengths": [
+    128,
+    256,
+    384
+  ],
+  "device": "cuda",
+  "accelerator": {
+    "name": "Tesla T4",
+    "vram_gib": 14.56
+  },
+  "versions": {
+    "torch": "2.14.1+cu130",
+    "transformers": "5.22.1",
+    "datasets": "4.8.5",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3",
+    "matplotlib": "3.10.0"
+  },
+  "sample_limits": [
+    10000,
+    1000,
+    1000
+  ],
+  "fp16_enabled": true
+}

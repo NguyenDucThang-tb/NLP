@@ -1,0 +1,32 @@
+{
+  "device": "cuda",
+  "cuda": true,
+  "accelerator": {
+    "name": "Tesla T4",
+    "vram_gib": 14.56
+  },
+  "versions": {
+    "torch": "2.14.1+cu130",
+    "transformers": "5.22.1",
+    "datasets": "4.8.5",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3",
+    "matplotlib": "3.10.0"
+  },
+  "model": "distilbert-base-uncased",
+  "seed": 42,
+  "mode": "FULL",
+  "run_id": "full_seed42",
+  "run_output_dir": "/content/NLP/Lab10/outputs/full_seed42",
+  "sample_limits": [
+    10000,
+    1000,
+    1000
+  ],
+  "batch_size": 8,
+  "learning_rate": 3e-05,
+  "epochs": 2,
+  "gradient_accumulation_steps": 1,
+  "fp16_enabled": true,
+  "stride": 64
+}

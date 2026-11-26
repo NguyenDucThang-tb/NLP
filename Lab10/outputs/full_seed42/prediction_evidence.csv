@@ -1,0 +1,9 @@
+case,version,question,context,gold_answer,gold_start_char,gold_end_char,id,prediction,start_char,end_char
+high lexical-overlap distractor,original,Who designed the Cedar Bridge?,Engineer Maya Chen designed the Cedar Bridge in 2011.,Maya Chen,9,18,application-input,Maya Chen,9,18
+high lexical-overlap distractor,modified,Who designed the Cedar Bridge?,Owen Lee discussed the Cedar Bridge design at a public meeting. Engineer Maya Chen designed the Cedar Bridge in 2011.,Maya Chen,73,82,application-input,Maya Chen,73,82
+short versus long answer span,original,What did the team discover?,The team discovered a cave.,a cave,20,26,application-input,a cave,20,26
+short versus long answer span,modified,What did the team discover?,The team discovered a previously unknown limestone cave beneath the eastern ridge after several days of mapping.,a previously unknown limestone cave beneath the eastern ridge,20,81,application-input,limestone cave,41,55
+irrelevant information added,original,Who was the observatory's first director?,The observatory opened in 1998. Its first director was Nadia Karim.,Nadia Karim,55,66,application-input,Nadia Karim,55,66
+irrelevant information added,modified,Who was the observatory's first director?,Local weather was unusually clear that week. The observatory opened in 1998. A nearby school also held a science fair. Its first director was Nadia Karim.,Nadia Karim,142,153,application-input,Nadia Karim,142,153
+sentence order changed,original,Who founded the robotics lab?,Mina Patel founded the robotics lab in 2012. The lab later moved to a larger building.,Mina Patel,0,10,application-input,Mina Patel,0,10
+sentence order changed,modified,Who founded the robotics lab?,The lab later moved to a larger building. Mina Patel founded the robotics lab in 2012.,Mina Patel,42,52,application-input,Mina Patel,42,52

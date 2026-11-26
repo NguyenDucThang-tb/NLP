@@ -1,0 +1,13 @@
+experiment,model,setting,split,num_samples,max_length,stride,train_windows,eval_windows,train_answer_coverage,validation_answer_coverage,heldout_answer_coverage,training_steps,em,f1,training_time_seconds,seed
+context_length,distilbert-base-uncased,max_length=128,held-out SQuAD validation partition,1000,128,64,24263,2528,1.0,1.0,1.0,6066,64.0,73.64803764380761,319.761777001,42
+context_length,distilbert-base-uncased,max_length=256,held-out SQuAD validation partition,1000,256,64,11014,1124,1.0,1.0,1.0,2754,69.0,78.18996640092364,191.73165001100006,42
+context_length,distilbert-base-uncased,max_length=384,held-out SQuAD validation partition,1000,384,64,10098,1018,1.0,1.0,1.0,2526,68.0,77.45406516703163,194.91143546800015,42
+pretrained_qa,distilbert-base-uncased,max_length=384,held-out SQuAD validation partition,1000,384,64,10098,1018,1.0,1.0,1.0,2526,68.0,77.45406516703163,194.91143546800015,42
+em_vs_f1,Keyword overlap baseline,baseline,held-out SQuAD validation partition,1000,,,,,,,,,0.2,19.53259247723549,,42
+em_vs_f1,distilbert-base-uncased,fine-tuned max_length=384,held-out SQuAD validation partition,1000,384,64,,1018,1.0,1.0,1.0,2526,68.0,77.45406516703163,194.91143546800015,42
+question_context_matching,distilbert-base-uncased,high_overlap,held-out SQuAD validation partition,824,384,64,,,,,,,69.29611650485437,78.4886213239961,,42
+question_context_matching,distilbert-base-uncased,low_overlap,held-out SQuAD validation partition,176,384,64,,,,,,,61.93181818181818,72.61046134124342,,42
+answer_length,distilbert-base-uncased,1,held-out SQuAD validation partition,224,384,64,,,,,,,68.30357142857143,76.77657433894304,,42
+answer_length,distilbert-base-uncased,2-3,held-out SQuAD validation partition,372,384,64,,,,,,,70.16129032258064,78.6004484168827,,42
+answer_length,distilbert-base-uncased,4-6,held-out SQuAD validation partition,275,384,64,,,,,,,72.36363636363636,80.88269047455583,,42
+answer_length,distilbert-base-uncased,7+,held-out SQuAD validation partition,129,384,64,,,,,,,51.93798449612403,68.01554901957498,,42
