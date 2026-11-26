@@ -16,6 +16,7 @@ Lab10/
 ├── qa_finetuning.ipynb
 ├── requirements.txt
 ├── tests/test_qa_framework.py
+├── tests/test_qa_student.py
 ├── results.csv                 # được tạo sau khi có experiment thật
 ├── learning_curves.png         # được tạo sau khi training thật
 ├── em_f1_analysis.png          # được tạo sau evaluation thật
@@ -56,14 +57,14 @@ python -m pip install -r requirements.txt
 2. Chạy cell setup đầu notebook. Cell sẽ tìm `Lab10/qa_model.py` hoặc clone repo vào `/content/NLP`.
 3. Chạy cell cài dependency; xác nhận `torch.cuda.is_available()` là `True` trước khi FULL.
 4. Đọc `student_implementation_guide.md` để hiểu alignment, window labels, span decoding và EM/F1 đã được triển khai trong `qa_model.py`.
-5. Chạy `tokenizer_alignment.ipynb` để chạy lại student QA tests. Trong `qa_finetuning.ipynb`, test suite được chạy trước khi các execution gates mở. Sau đó đặt `RUN_TRAINING=True` và chạy `MODE="QUICK"`; chỉ chuyển `MODE="FULL"` sau khi QUICK hoàn tất.
+5. Mở `qa_finetuning.ipynb`, chọn **Runtime → Run all**. Notebook được cấu hình `MODE="FULL"`, `RUN_TRAINING=True`, và sẽ chạy unit tests trước. FULL dừng ngay nếu không phát hiện CUDA. Nếu muốn kiểm tra nhanh trước, đổi `MODE="QUICK"`; QUICK dùng 64/16/16 examples và một epoch, còn FULL dùng tối đa 10.000/1.000/1.000 examples và hai epochs.
 6. Tải `Lab10/outputs/`, notebook outputs và PNG/CSV về máy hoặc đồng bộ lên Drive. Checkpoints bị ignore để tránh commit file lớn.
 
 Nếu notebook mở trực tiếp từ GitHub nhưng runtime báo thiếu thư mục, cần clone repo trong runtime; mở notebook từ trang GitHub không tự tạo checkout trong `/content`.
 
 ## Configuration and reproducibility
 
-`QAConfig` ở `qa_model.py` là cấu hình chung. Đề xuất: model/tokenizer `distilbert-base-uncased`, seed 42, batch size 8, learning rate `3e-5`, 2 epochs, AdamW, max length mặc định 384, stride mặc định 128 và FP16 khi có CUDA. Thí nghiệm context length dùng stride chung 64 cho 128/256/384 vì stride phải nhỏ hơn max length; giữ các yếu tố còn lại cố định và khởi tạo lại từ cùng pretrained model cho mỗi setting.
+`QAConfig` ở `qa_model.py` là cấu hình chung. Đề xuất: model/tokenizer `distilbert-base-uncased`, seed 42, batch size 8, learning rate `3e-5`, 2 epochs, AdamW, max length mặc định 384, stride mục tiêu 64 và FP16 khi có CUDA. Notebook kiểm tra chiều dài câu hỏi của các split đang dùng; nếu stride 64 không vừa context capacity ở max length 128, nó tự hạ stride chung và in giá trị thực tế. Cả ba setting dùng cùng stride và khởi tạo lại từ cùng pretrained model.
 
 Các số trên là **proposed configuration**, chưa phải actual run. Actual config, hardware, thời gian, số examples, split IDs và kết quả chỉ được ghi sau khi chạy thành công. Test không dùng chọn checkpoint; validation EM/F1 chọn best checkpoint. So sánh context length trên held-out split là báo cáo thí nghiệm, không dùng chọn cấu hình để tuyên bố test độc lập lần nữa.
 
@@ -81,7 +82,9 @@ Các số trên là **proposed configuration**, chưa phải actual run. Actual 
 
 Các hàm alignment, train/validation feature preparation, answer coverage, span decoding, chuẩn hóa SQuAD, Exact Match, token F1, aggregation theo ID và phân loại span errors đã được triển khai trong `qa_model.py`. `tests/test_qa_student.py` chứa expected cases hoạt động, không còn test TODO bị skip.
 
-Trước khi training, `qa_finetuning.ipynb` chạy toàn bộ unit tests. Các cờ alignment/metrics/error-analysis chỉ được mở nếu suite thành công và không có test skip. `RUN_TRAINING` vẫn mặc định `False`, để người học chủ động chọn QUICK trước FULL.
+Trước khi training, `qa_finetuning.ipynb` chạy toàn bộ unit tests. Các cờ alignment/metrics/error-analysis chỉ được mở nếu suite thành công và không có test skip. Notebook mặc định chạy FULL sau khi người học chọn GPU T4; QUICK là lựa chọn kiểm tra nhanh.
+
+FULL giữ `RUN_ID="full_seed42"` ổn định và bật tự resume. Nếu Colab ngắt, mở lại runtime, chọn T4 và chạy notebook lại: checkpoint có `trainer_state.pt` sẽ resume; context length chưa có trạng thái sẽ bắt đầu từ pretrained weights. Muốn chạy mới từ đầu, đổi `RUN_ID` sang tên mới hoặc đặt `RESUME_EXISTING=False`.
 
 Các triển khai được tạo với AI hỗ trợ. Hãy đọc guide, rà lại công thức và hiểu output tests trước khi chạy; khai báo AI contribution trong reflection. Không có kết quả training nào được tạo trong bước kiểm thử code này.
 
@@ -98,7 +101,7 @@ Nếu một run chưa hoàn thành, giữ trạng thái NOT_RUN/INCOMPLETE, khô
 
 ## Local verification status
 
-- Unit suite: **45 passed, 0 failed, 0 skipped** after implementing the QA algorithms and replacing placeholder tests with explicit cases.
+- Unit suite: **47 passed, 0 failed, 0 skipped** after implementing the QA algorithms, checkpoint resume handling and model-input compatibility.
 - `qa_model.py`, `document_qa.py` and tests pass Python syntax compilation.
 - No pretrained SQuAD fine-tuning, formal result CSV or experiment plots have been generated; the local runtime has no CUDA.
 - Colab T4 execution has not been verified from this local environment.
@@ -119,6 +122,6 @@ Nếu một run chưa hoàn thành, giữ trạng thái NOT_RUN/INCOMPLETE, khô
 ## Current readiness
 
 - Framework, split checks, result upsert, checkpoint/resume utilities, gradient accumulation and experiment notebook scaffolds are implemented.
-- Code and test gates are ready for Colab QUICK; `RUN_TRAINING` remains off by default. Set it to `True` after confirming the test suite passes in the Colab runtime.
+- Code and test gates are configured for Colab FULL; the notebook runs tests before training and requires CUDA in FULL mode.
 - No pretrained fine-tuning, full experiment, metric CSV or result plot is claimed as completed by this checkout.
 - GPU execution is **NOT_VERIFIED**. Confirm CUDA/T4 in Colab, finish QUICK first, and run FULL only after reviewing its actual outputs.

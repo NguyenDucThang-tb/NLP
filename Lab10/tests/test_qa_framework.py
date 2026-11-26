@@ -1,4 +1,4 @@
-"""Tests for implemented framework pieces; student-owned tests stay skipped."""
+"""Tests for the QA framework and implemented student algorithms."""
 
 from __future__ import annotations
 
@@ -101,8 +101,41 @@ class TestArtifactUtilities(unittest.TestCase):
         self.assertIn("python", report)
         self.assertEqual(report["mode"], "QUICK")
 
+    def test_checkpoint_resume_requires_saved_trainer_state(self):
+        from qa_model import checkpoint_resume_path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            checkpoint = Path(tmp) / "run"
+            checkpoint.mkdir()
+            self.assertIsNone(checkpoint_resume_path(checkpoint, resume_existing=True))
+            (checkpoint / "trainer_state.pt").write_bytes(b"state")
+            self.assertEqual(checkpoint_resume_path(checkpoint, resume_existing=True), str(checkpoint))
+            self.assertIsNone(checkpoint_resume_path(checkpoint, resume_existing=False))
+
 
 class TestModelPlumbingSmoke(unittest.TestCase):
+    def test_forward_qa_batch_drops_unsupported_token_type_ids(self):
+        import torch
+        from types import SimpleNamespace
+        from qa_model import forward_qa_batch
+
+        class StrictQA(torch.nn.Module):
+            def forward(self, input_ids, attention_mask, start_positions, end_positions):
+                self.received = {"input_ids", "attention_mask", "start_positions", "end_positions"}
+                return SimpleNamespace(loss=input_ids.float().sum() * 0)
+
+        model = StrictQA()
+        batch = {
+            "input_ids": torch.ones((1, 3), dtype=torch.long),
+            "attention_mask": torch.ones((1, 3), dtype=torch.long),
+            "token_type_ids": torch.zeros((1, 3), dtype=torch.long),
+            "start_positions": torch.tensor([1]),
+            "end_positions": torch.tensor([1]),
+        }
+        result = forward_qa_batch(model, batch, torch.device("cpu"))
+        self.assertTrue(torch.isfinite(result.loss).item())
+        self.assertEqual(model.received, {"input_ids", "attention_mask", "start_positions", "end_positions"})
+
     def test_random_initialized_qa_head_shapes_and_loss(self):
         import torch
         from transformers import AutoModelForQuestionAnswering, DistilBertConfig

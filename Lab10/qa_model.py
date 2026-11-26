@@ -274,8 +274,25 @@ def build_qa_model(model_id: str = MODEL_ID):
 
 def forward_qa_batch(model: Any, batch: dict[str, Any], device: Any):
     """Run a QA forward pass and let the model compute training loss if labels exist."""
+    import inspect
     model_inputs = {key: batch[key].to(device) for key in ("input_ids", "attention_mask", "token_type_ids", "start_positions", "end_positions") if key in batch}
+    # Một số tokenizer trả token_type_ids dù QA model không nhận tham số này.
+    try:
+        parameters = inspect.signature(model.forward).parameters
+        accepts_extra = any(parameter.kind == inspect.Parameter.VAR_KEYWORD for parameter in parameters.values())
+        if not accepts_extra:
+            model_inputs = {key: value for key, value in model_inputs.items() if key in parameters}
+    except (TypeError, ValueError):
+        pass
     return model(**model_inputs)
+
+
+def checkpoint_resume_path(checkpoint_dir: str | Path, resume_existing: bool = True) -> str | None:
+    """Return a checkpoint path only when a resumable trainer state exists."""
+    checkpoint = Path(checkpoint_dir)
+    if resume_existing and (checkpoint / "trainer_state.pt").is_file():
+        return str(checkpoint)
+    return None
 
 
 def train_one_epoch(model: Any, dataloader: Any, optimizer: Any, device: Any,
