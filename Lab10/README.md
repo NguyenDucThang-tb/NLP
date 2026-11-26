@@ -101,7 +101,7 @@ Nếu một run chưa hoàn thành, giữ trạng thái NOT_RUN/INCOMPLETE, khô
 
 ## Local verification status
 
-- Unit suite: **47 passed, 0 failed, 0 skipped** after implementing the QA algorithms, checkpoint resume handling and model-input compatibility.
+- Unit suite: **48 passed, 0 failed, 0 skipped** after implementing the QA algorithms, validation loss labels, checkpoint resume handling and model-input compatibility.
 - `qa_model.py`, `document_qa.py` and tests pass Python syntax compilation.
 - No pretrained SQuAD fine-tuning, formal result CSV or experiment plots have been generated; the local runtime has no CUDA.
 - Colab T4 execution has not been verified from this local environment.

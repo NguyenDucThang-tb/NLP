@@ -149,7 +149,17 @@ class TestFeaturePreparationStudentCases(unittest.TestCase):
         for feature in features:
             self.assertEqual(len(feature["offset_mapping"]), len(feature["sequence_ids"]))
             self.assertTrue(all(offset is None for offset, sid in zip(feature["offset_mapping"], feature["sequence_ids"]) if sid != 1))
+        self.assertEqual((features[0]["start_positions"], features[0]["end_positions"]), (0, 0))
+        self.assertEqual((features[1]["start_positions"], features[1]["end_positions"]), (4, 5))
         self.assertNotIn("answers", features[0])
+
+    def test_validation_windows_without_answer_use_cls_labels(self):
+        from qa_model import prepare_validation_features
+        example = {**self.example, "answers": {"text": [], "answer_start": []}}
+        features = prepare_validation_features(self.tokenizer, [example], max_length=9, stride=1)
+        self.assertTrue(features)
+        self.assertTrue(all((feature["start_positions"], feature["end_positions"]) == (0, 0)
+                            for feature in features))
 
     def test_answer_coverage_counts_a_complete_span_once(self):
         from qa_model import prepare_validation_features, window_answer_coverage

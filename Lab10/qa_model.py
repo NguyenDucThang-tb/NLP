@@ -539,7 +539,7 @@ def prepare_train_features(tokenizer: Any, examples: Sequence[dict[str, Any]], m
 
 
 def prepare_validation_features(tokenizer: Any, examples: Sequence[dict[str, Any]], max_length: int, stride: int) -> list[dict[str, Any]]:
-    """Create validation windows with enough metadata to restore spans in original contexts."""
+    """Create labeled validation windows and metadata for loss and span decoding."""
     if not examples:
         return []
     if not getattr(tokenizer, "is_fast", False):
@@ -570,6 +570,21 @@ def prepare_validation_features(tokenizer: Any, examples: Sequence[dict[str, Any
             else:
                 offsets.append((int(offset[0]), int(offset[1])))
 
+        input_ids = list(encoded["input_ids"][feature_index])
+        cls_id = getattr(tokenizer, "cls_token_id", None)
+        try:
+            cls_position = input_ids.index(int(cls_id)) if cls_id is not None else 0
+        except ValueError:
+            cls_position = 0
+        answers = examples[source_index].get("answers", {})
+        answer_texts = list(answers.get("text") or [])
+        answer_starts = list(answers.get("answer_start") or [])
+        aligned_span = None
+        for answer_text, answer_start in zip(answer_texts, answer_starts):
+            aligned_span = character_to_token_span(offsets, sequence_ids, int(answer_start), str(answer_text))
+            if aligned_span is not None:
+                break
+
         row = {
             key: list(encoded[key][feature_index])
             for key in tokenizer.model_input_names
@@ -580,6 +595,9 @@ def prepare_validation_features(tokenizer: Any, examples: Sequence[dict[str, Any
             "offset_mapping": offsets,
             "sequence_ids": list(sequence_ids),
             "overflow_to_sample_mapping": source_index,
+            # Validation loss needs labels; windows without a full answer use CLS/no-span.
+            "start_positions": (aligned_span or (cls_position, cls_position))[0],
+            "end_positions": (aligned_span or (cls_position, cls_position))[1],
         })
         features.append(row)
     return features
