@@ -509,7 +509,13 @@ def prepare_train_features(tokenizer: Any, examples: Sequence[dict[str, Any]], m
             raise ValueError(f"Invalid overflow source index: {source_index}")
         input_ids = list(encoded["input_ids"][feature_index])
         sequence_ids = encoded.sequence_ids(feature_index)
-        offsets = encoded["offset_mapping"][feature_index]
+        raw_offsets = encoded["offset_mapping"][feature_index]
+        offsets = []
+        for offset, sequence_id in zip(raw_offsets, sequence_ids):
+            if sequence_id != 1 or offset is None or len(offset) != 2 or int(offset[1]) <= int(offset[0]):
+                offsets.append(None)
+            else:
+                offsets.append((int(offset[0]), int(offset[1])))
         answers = examples[source_index].get("answers", {})
         answer_texts = list(answers.get("text") or [])
         answer_starts = list(answers.get("answer_start") or [])
@@ -534,6 +540,9 @@ def prepare_train_features(tokenizer: Any, examples: Sequence[dict[str, Any]], m
         row["input_ids"] = input_ids
         row["start_positions"], row["end_positions"] = aligned_span or (cls_position, cls_position)
         row["overflow_to_sample_mapping"] = source_index
+        # Keep offsets for coverage auditing; the model loader selects model inputs only.
+        row["offset_mapping"] = offsets
+        row["sequence_ids"] = list(sequence_ids)
         features.append(row)
     return features
 
@@ -611,7 +620,7 @@ def window_answer_coverage(example: dict[str, Any], feature: dict[str, Any]) -> 
     offsets = feature.get("offset_mapping")
     sequence_ids = feature.get("sequence_ids")
     if offsets is None or sequence_ids is None:
-        raise KeyError("Validation feature must preserve offsets and sequence_ids")
+        raise KeyError("Feature must preserve offsets and sequence_ids")
     return any(
         character_to_token_span(offsets, sequence_ids, int(start), str(text)) is not None
         for text, start in zip(texts, starts)

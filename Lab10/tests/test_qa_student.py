@@ -132,13 +132,16 @@ class TestFeaturePreparationStudentCases(unittest.TestCase):
                         "answers": {"text": ["delta epsilon"], "answer_start": [17]}}
 
     def test_training_features_keep_window_labels_and_source_mapping(self):
-        from qa_model import prepare_train_features
+        from qa_model import prepare_train_features, window_answer_coverage
         features = prepare_train_features(self.tokenizer, [self.example], max_length=9, stride=1)
         self.assertEqual(len(features), 2)
         self.assertEqual([feature["overflow_to_sample_mapping"] for feature in features], [0, 0])
         self.assertEqual((features[0]["start_positions"], features[0]["end_positions"]), (0, 0))
         # second feature contains "delta epsilon" at token indices 4 and 5
         self.assertEqual((features[1]["start_positions"], features[1]["end_positions"]), (4, 5))
+        self.assertTrue(all(len(feature["offset_mapping"]) == len(feature["sequence_ids"])
+                            for feature in features))
+        self.assertEqual(sum(window_answer_coverage(self.example, feature) for feature in features), 1)
 
     def test_validation_features_keep_ids_offsets_and_sequence_mapping(self):
         from qa_model import prepare_validation_features

@@ -33,13 +33,13 @@ Hàm: `prepare_train_features(tokenizer, examples, max_length, stride)`.
 3. Lấy `sequence_ids(j)` để chỉ nhận diện token thuộc context.
 4. Dùng answer character span của example tương ứng để tìm token span trong từng window.
 5. Nếu window chứa trọn answer, gắn start/end token positions. Nếu không, dùng quy ước no-answer-window nhất quán (thường CLS cho cả hai đầu trong SQuAD v1.1).
-6. Trả các model inputs cùng `start_positions`, `end_positions`, và metadata `overflow_to_sample_mapping` cần để đo coverage.
+6. Trả các model inputs cùng `start_positions`, `end_positions`, `overflow_to_sample_mapping`, `offset_mapping` và `sequence_ids`. Metadata offsets dùng để đo answer coverage; data collator chỉ chọn model inputs và labels.
 
 Ví dụ hình dung: một context dài sinh ra ba windows; nếu answer chỉ xuất hiện trọn trong window 2 thì window 2 nhận span label, hai window còn lại nhận nhãn no-answer-window. Cùng một câu gốc có thể vì vậy tạo nhiều training features.
 
 ## 3. Validation features và answer coverage
 
-Hàm `prepare_validation_features()` tokenize cùng cách nhưng không dùng gold span để tạo nhãn. Mỗi feature cần giữ `example_id` hoặc sample mapping, `offset_mapping`, và sequence IDs/đủ thông tin để biết token nào là context. Không bỏ các example không có answer trong window.
+Hàm `prepare_validation_features()` tokenize cùng cách, giữ `example_id` hoặc sample mapping, `offset_mapping`, sequence IDs và span labels để tính validation loss. Window không chứa trọn answer được gán CLS/no-span. Inference dùng loader riêng không đưa labels vào model. Không bỏ các example không có answer trong window.
 
 Hàm `window_answer_coverage(example, feature)` trả lời câu hỏi: window này có chứa **toàn bộ** gold character span không? So sánh span answer với vùng offset context của feature, đồng thời xác nhận các token giao span thuộc context. Coverage của tập dữ liệu là số example có ít nhất một window chứa đủ answer chia cho tổng số example.
 
